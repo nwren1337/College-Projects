@@ -162,6 +162,27 @@ public class DoubleArraySeq implements Cloneable
       }
    }
    
+  /**
+   * Add a new element to this sequence, at the front of the sequence 
+   * If the new element would take this sequence beyond its current capacity,
+   * then the capacity is increased before adding the new element.
+   * @param element
+   *   the new element that is being added
+   * @postcondition
+   *   A new copy of the element has been added to this first spot of the sequence.
+   *   The new element becomes the current element of this sequence. 
+   * @exception OutOfMemoryError
+   *   Indicates insufficient memory for increasing the sequence's capacity.
+   * @note
+   *   An attempt to increase the capacity beyond
+   *   Integer.MAX_VALUE will cause the sequence to fail with an
+   *   arithmetic overflow.
+   **/
+   public void addFront(double element)
+   {
+      // Implemented by Nate.
+   }
+   
    
    /**
    * Place the contents of another sequence at the end of this sequence.
@@ -265,6 +286,7 @@ public class DoubleArraySeq implements Cloneable
    public static DoubleArraySeq concatenation(DoubleArraySeq s1, DoubleArraySeq s2)
    {
       // Implemented by student.
+      return null;
    }
 
 
@@ -296,6 +318,7 @@ public class DoubleArraySeq implements Cloneable
    public int getCapacity( )
    {
       // Implemented by student.
+      return data.length;
    }
 
 
@@ -313,6 +336,7 @@ public class DoubleArraySeq implements Cloneable
    public double getCurrent( )
    {
       // Implemented by student.
+      return data[currentIndex];
    }
 
 
@@ -327,6 +351,7 @@ public class DoubleArraySeq implements Cloneable
    public boolean isCurrent( )
    {
       // Implemented by student.
+      return false;
    }
               
    /**
@@ -358,6 +383,7 @@ public class DoubleArraySeq implements Cloneable
    public int size( )
    {
       // Implemented by student.
+      return 0;
    }
    
    
