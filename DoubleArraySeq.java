@@ -232,7 +232,14 @@ public class DoubleArraySeq implements Cloneable
    **/
    public void advance( )
    {
-      // Implemented by student.
+      // Implemented by Nate
+      if(isCurrent())
+      {
+         if(currentIndex < manyItems)
+            currentIndex++;
+      } else {
+         throw new IllegalStateException("There is no current element");
+      }
    }
    
    
