@@ -413,6 +413,37 @@ public class DoubleArraySeq implements Cloneable
       // Implemented by student.
    }
    
+   public boolean equals(Object obj)
+   {
+      if(obj instanceof DoubleArraySeq)
+      {
+         //Cast the reference object to a DoubleArraySeq
+         DoubleArraySeq tmp = (DoubleArraySeq) obj;
+         //Set up return variable
+         boolean sameData = false;
+         
+         //If they are not the same length it will never enter the loop and will return false
+         if(this.manyItems == tmp.manyItems)
+         {
+            //If they are the same length, it start at the first element and check each value in data for equality
+            //Breaks out of the loop if we are either at the end of the array, or if one element does not match
+            //The corresponding element in the passed object
+            int i = 0;
+            do
+            {
+                sameData = (this.data[i] == tmp.data[i]);
+                i++;
+            } while((i < this.manyItems) && (sameData));
+         }
+         
+         //return results of computation
+         return sameData;
+       } else {
+         //Thrown in the case that they pass another object type than DoubleArraySeq
+         throw new IllegalArgumentException("Object passed to function was of type " + obj.getClass() + " not " + this.getClass());
+       }
+   }
+   
    
    /**
    * Reduce the current capacity of this sequence to its actual size (i.e., the
