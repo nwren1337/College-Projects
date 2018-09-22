@@ -151,10 +151,16 @@ public class DoubleArraySeq implements Cloneable
             ensureCapacity((manyItems + 1) * 2);
          }
          
+         manyItems++;
+         
+         double tmp = data[currentIndex], tmp2;
+         
          //Move all elements forward one space
-         for(int i = currentIndex; i < manyItems - 1; i++)
+         for(int i = currentIndex + 1; i < manyItems - 1; i++)
          {
-            data[i + 1] = data[i];
+            tmp2 = data[i];
+            data[i] = tmp;
+            tmp = tmp2;
          }
          
          //Set the data at the current index to the 
