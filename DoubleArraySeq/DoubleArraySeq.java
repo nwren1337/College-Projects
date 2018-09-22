@@ -136,7 +136,57 @@ public class DoubleArraySeq implements Cloneable
    **/
    public void addBefore(double element)
    {
-      // Implemented by student.
+      // Implemented by Nate.
+      
+      if(currentIndex == 0)
+      {
+         //Space ensurance will be handled in addFront
+         addFront(element);
+      }
+      else
+      {
+         //Ensure we have space
+         if(manyItems == data.length)
+         {
+            ensureCapacity((manyItems + 1) * 2);
+         }
+         
+         manyItems++;
+         
+         double tmp = data[currentIndex], tmp2;
+         
+         //Move all elements forward one space
+         for(int i = currentIndex + 1; i < manyItems - 1; i++)
+         {
+            tmp2 = data[i];
+            data[i] = tmp;
+            tmp = tmp2;
+         }
+         
+         //Set the data at the current index to the 
+         data[currentIndex] = element;
+      }
+   }
+   
+  /**
+   * Add a new element to this sequence, at the front of the sequence 
+   * If the new element would take this sequence beyond its current capacity,
+   * then the capacity is increased before adding the new element.
+   * @param element
+   *   the new element that is being added
+   * @postcondition
+   *   A new copy of the element has been added to this first spot of the sequence.
+   *   The new element becomes the current element of this sequence. 
+   * @exception OutOfMemoryError
+   *   Indicates insufficient memory for increasing the sequence's capacity.
+   * @note
+   *   An attempt to increase the capacity beyond
+   *   Integer.MAX_VALUE will cause the sequence to fail with an
+   *   arithmetic overflow.
+   **/
+   public void addFront(double element)
+   {
+      // Implemented by Nate.
    }
    
    
@@ -182,7 +232,14 @@ public class DoubleArraySeq implements Cloneable
    **/
    public void advance( )
    {
-      // Implemented by student.
+      // Implemented by Nate
+      if(isCurrent())
+      {
+         if(currentIndex < manyItems)
+            currentIndex++;
+      } else {
+         throw new IllegalStateException("There is no current element");
+      }
    }
    
    
@@ -242,6 +299,7 @@ public class DoubleArraySeq implements Cloneable
    public static DoubleArraySeq concatenation(DoubleArraySeq s1, DoubleArraySeq s2)
    {
       // Implemented by student.
+      return null;
    }
 
 
@@ -273,6 +331,7 @@ public class DoubleArraySeq implements Cloneable
    public int getCapacity( )
    {
       // Implemented by student.
+      return data.length;
    }
 
 
@@ -290,6 +349,7 @@ public class DoubleArraySeq implements Cloneable
    public double getCurrent( )
    {
       // Implemented by student.
+      return data[currentIndex];
    }
 
 
@@ -304,6 +364,7 @@ public class DoubleArraySeq implements Cloneable
    public boolean isCurrent( )
    {
       // Implemented by student.
+      return false;
    }
               
    /**
@@ -335,6 +396,7 @@ public class DoubleArraySeq implements Cloneable
    public int size( )
    {
       // Implemented by student.
+      return 0;
    }
    
    
@@ -349,6 +411,37 @@ public class DoubleArraySeq implements Cloneable
    public void start( )
    {
       // Implemented by student.
+   }
+   
+   public boolean equals(Object obj)
+   {
+      if(obj instanceof DoubleArraySeq)
+      {
+         //Cast the reference object to a DoubleArraySeq
+         DoubleArraySeq tmp = (DoubleArraySeq) obj;
+         //Set up return variable
+         boolean sameData = false;
+         
+         //If they are not the same length it will never enter the loop and will return false
+         if(this.manyItems == tmp.manyItems)
+         {
+            //If they are the same length, it start at the first element and check each value in data for equality
+            //Breaks out of the loop if we are either at the end of the array, or if one the elements do not match
+            //The corresponding element in the passed object
+            int i = 0;
+            do
+            {
+                sameData = (this.data[i] == tmp.data[i]);
+                i++;
+            } while((i < this.manyItems) && (sameData));
+         }
+         
+         //return results of computation
+         return sameData;
+       } else {
+         //Thrown in the case that they pass another object type than DoubleArraySeq
+         throw new IllegalArgumentException("Object passed to function was of type " + obj.getClass() + " not " + this.getClass());
+       }
    }
    
    
