@@ -194,6 +194,19 @@ public class DoubleArraySeq implements Cloneable
    public void addFront(double element)
    {
       // Implemented by Nate.
+      if(manyItems == data.length)
+      {
+         ensureCapacity((manyItems + 1) * 2);
+      }
+      
+      manyItems++;
+      
+      double[] tmp = new double[data.length];
+      System.arraycopy(data, 0, tmp, 1, manyItems);
+      tmp[0] = element;
+      data = tmp;
+      currentIndex = 0;
+      
    }
    
    
@@ -242,7 +255,7 @@ public class DoubleArraySeq implements Cloneable
       // Implemented by Nate
       if(isCurrent())
       {
-         if(currentIndex < manyItems)
+         if(currentIndex < (manyItems - 1))
             currentIndex++;
       } else {
          throw new IllegalStateException("There is no current element");
@@ -379,7 +392,7 @@ public class DoubleArraySeq implements Cloneable
    public boolean isCurrent( )
    {
       // Implemented by student.
-      return false;
+      return true;
    }
               
    /**
