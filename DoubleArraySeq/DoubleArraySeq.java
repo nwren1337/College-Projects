@@ -216,6 +216,36 @@ public class DoubleArraySeq implements Cloneable
       
    }
    
+  /**
+   * Add a new element to the end of the sequence 
+   * If the new element would take this sequence beyond its current capacity,
+   * then the capacity is increased before adding the new element.
+   * @param element
+   *   the new element that is being added
+   * @postcondition
+   *   A new copy of the element has been added to this first spot of the sequence.
+   *   The new element becomes the current element of this sequence. 
+   * @exception OutOfMemoryError
+   *   Indicates insufficient memory for increasing the sequence's capacity.
+   * @note
+   *   An attempt to increase the capacity beyond
+   *   Integer.MAX_VALUE will cause the sequence to fail with an
+   *   arithmetic overflow.
+   **/
+   public void addEnd(double element)
+   {
+      // Implemented by Nate.
+      if(manyItems == data.length)
+      {
+         ensureCapacity((manyItems + 1) * 2);
+      }
+      
+      currentIndex = manyItems;
+      manyItems++;
+      data[currentIndex] = element;      
+      
+   }
+   
    
    /**
    * Place the contents of another sequence at the end of this sequence.
