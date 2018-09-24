@@ -50,6 +50,9 @@ public class DoubleArraySeq implements Cloneable
    private double[ ] data;
    private int manyItems;
    private int currentIndex; 
+
+   //Constant for default initial capacity
+   private final int INIT_CAP = 10;
    
    /**
    * Initialize an empty sequence with an initial capacity of 10.  Note that
@@ -64,7 +67,9 @@ public class DoubleArraySeq implements Cloneable
    **/   
    public DoubleArraySeq( )
    {
-      // Implemented by student.
+      manyItems = 0;
+      currentIndex = 0;
+      data = new double[INIT_CAP];
    }
      
 
@@ -86,7 +91,9 @@ public class DoubleArraySeq implements Cloneable
    **/   
    public DoubleArraySeq(int initialCapacity)
    {
-      // Implemented by student.
+      manyItems = 0;
+      currentIndex = 0;
+      data = new double[initialCapacity];
    }
         
  
@@ -317,6 +324,14 @@ public class DoubleArraySeq implements Cloneable
    public void ensureCapacity(int minimumCapacity)
    {
       // Implemented by student.
+      double[] larger;
+      
+      if(data.length < minimumCapacity)
+      {
+         larger = new double[minimumCapacity];
+         System.arraycopy(data, 0, larger, 0, manyItems);
+         data = larger;
+      }
    }
 
    
@@ -396,7 +411,7 @@ public class DoubleArraySeq implements Cloneable
    public int size( )
    {
       // Implemented by student.
-      return 0;
+      return manyItems;
    }
    
    
