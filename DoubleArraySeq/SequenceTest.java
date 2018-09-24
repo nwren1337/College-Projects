@@ -12,5 +12,17 @@ public class SequenceTest
    public static void main(String[] args)
    {
       System.out.println("Hello.");
+      
+      DoubleArraySeq test = new DoubleArraySeq();
+      test.addFront(1);
+      test.addFront(3);
+      System.out.println(test.getCurrent());
+      test.advance();
+      System.out.println(test.getCurrent());
+      test.advance();
+      test.addBefore(2);
+      System.out.println(test.getCurrent());
+      test.advance();
+      System.out.println(test.getCurrent());;
    }
 }
