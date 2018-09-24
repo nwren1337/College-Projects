@@ -160,9 +160,15 @@ public class DoubleArraySeq implements Cloneable
          
          manyItems++;
          
-         double tmp = data[currentIndex], tmp2;
+         //Functional, but inefficient implementation
+         //Requires a second array to be created in RAM
+         double[] tmp = new double[data.length];
+         System.arraycopy(data, currentIndex, tmp, 0, manyItems);
+         data[currentIndex] = element;
+         System.arraycopy(tmp, 0, data, currentIndex + 1, manyItems);
          
          //Move all elements forward one space
+         /*
          for(int i = currentIndex + 1; i < manyItems - 1; i++)
          {
             tmp2 = data[i];
@@ -171,7 +177,8 @@ public class DoubleArraySeq implements Cloneable
          }
          
          //Set the data at the current index to the 
-         data[currentIndex] = element;
+         data[] = element;
+         */
       }
    }
    
