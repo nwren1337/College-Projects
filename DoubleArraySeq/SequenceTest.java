@@ -15,6 +15,7 @@ public class SequenceTest
       
       DoubleArraySeq test = new DoubleArraySeq();
       test.addFront(1);
+      System.out.println(test.getCurrent());
       test.addFront(3);
       System.out.println(test.getCurrent());
       test.advance();
