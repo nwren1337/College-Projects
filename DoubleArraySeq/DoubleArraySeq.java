@@ -205,10 +205,10 @@ public class DoubleArraySeq implements Cloneable
       {
          ensureCapacity((manyItems + 1) * 2);
       }
-      
+
       manyItems++;
       
-      double[] tmp = new double[data.length];
+      double[] tmp = new double[manyItems + 1];
       System.arraycopy(data, 0, tmp, 1, manyItems);
       tmp[0] = element;
       data = tmp;
