@@ -43,9 +43,12 @@ public class SequenceTest
       for(int i = 0; i < 15; i++)
       {
          test3.addFront(i);
-         System.out.println("sup");
       }
       
       System.out.println("Size of data : " + test3.getCapacity() + " manyItems : " + test3.size());
+      
+      double element = test3.getElement(1);
+      
+      System.out.println("4th element : " + element);
    }
 }
