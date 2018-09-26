@@ -530,6 +530,31 @@ public class DoubleArraySeq implements Cloneable
          data = trimmedArray;
       }
    }
+   
+  /**
+   * Gets nth element from the sequence. Sets current index to nth element.
+   * @param n
+   *   The index of the element to get
+   * @postcondition
+   *   Current Index is set to n
+   * @return 
+   *   value of nth element
+   * @exception IllegalStateException
+   *   Indicates that either the sequence is empty or n is larger than the number of items 
+   **/
+   public double getElement(int n)
+   {
+      if(n < manyItems)
+      {
+         currentIndex = n - 1;
+         return data[n - 1];
+      }
+      else
+      {
+         throw new IllegalStateException("Sequence empty or nth element is larger than the number of items!");
+      }
+   }
       
 }
            
+
