@@ -355,8 +355,28 @@ public class DoubleArraySeq implements Cloneable
    **/   
    public static DoubleArraySeq concatenation(DoubleArraySeq s1, DoubleArraySeq s2)
    {
-      // Implemented by student.
-      return null;
+      /* this is bugged for some unknown reason
+       * Data is not being initialized to the right length
+      int totsize = s1.manyItems + s2.manyItems;
+      DoubleArraySeq concat = new DoubleArraySeq(totsize);
+      System.arraycopy(s1.data, 0, concat.data, 0, s1.manyItems);
+      System.arraycopy(s2.data, 0, concat.data, s1.manyItems, totsize - 1); */
+      
+      DoubleArraySeq concat = new DoubleArraySeq();
+      
+      for(int i = 0; i < s1.manyItems; i++)
+      {
+         concat.addEnd(s1.data[i]);
+      }
+      
+      for(int i = 0; i < s2.manyItems; i++)
+      {
+         concat.addEnd(s2.data[i]);
+      }
+      
+      concat.currentIndex = concat.manyItems;
+      
+      return concat;
    }
 
 
@@ -429,7 +449,7 @@ public class DoubleArraySeq implements Cloneable
    public boolean isCurrent( )
    {
       // Implemented by student.
-      return true;
+      return currentIndex < manyItems;
    }
               
    /**
@@ -476,6 +496,7 @@ public class DoubleArraySeq implements Cloneable
    public void start( )
    {
       // Implemented by student.
+      currentIndex = 0;
    }
    
    public boolean equals(Object obj)
