@@ -40,15 +40,34 @@ public class SequenceTest
       
       DoubleArraySeq test3 = new DoubleArraySeq();
       
-      for(int i = 0; i < 15; i++)
+      for(int i = 0; i < 10; i++)
       {
-         test3.addFront(i);
+         test3.addEnd(i);
       }
       
       System.out.println("Size of data : " + test3.getCapacity() + " manyItems : " + test3.size());
       
-      double element = test3.getElement(1);
+      double element = test3.getElement(4);
       
       System.out.println("4th element : " + element);
+      
+      
+      DoubleArraySeq test4 = new DoubleArraySeq();
+      
+      for(int i = 10; i < 20; i++)
+      {
+         test4.addEnd(i);
+      }
+      
+      DoubleArraySeq testConcat = DoubleArraySeq.concatenation(test3, test4);
+      
+      testConcat.start();
+      
+      for(int i = 0; i < testConcat.size(); i++)
+      {
+         System.out.println(testConcat.getCurrent());
+         testConcat.advance();
+      }
+      
    }
 }
