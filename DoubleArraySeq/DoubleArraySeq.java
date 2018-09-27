@@ -544,7 +544,7 @@ public class DoubleArraySeq implements Cloneable
    **/
    public void setCurrentLast( )
    {
-      currentIndex = manyItems;
+      currentIndex = manyItems - 1;
    }
    /**
    *Sets the current element to the element chosen by the user
@@ -553,11 +553,11 @@ public class DoubleArraySeq implements Cloneable
    *@postcondition
    *  The current element is set at the element chosen by the user
    *@throws IllegalStateException
-   *        Thrown if input is larger than number of items in sequence
+   *        Thrown if input is larger than number of items in sequence or less than zero
    **/
    public void setCurrent(int element)
    {
-      if(element < manyItems)
+      if(element >= 0 && element < manyItems)
          currentIndex = element;
       else
          throw new IllegalStateException("Element is larger than the number of items in the sequence!");
