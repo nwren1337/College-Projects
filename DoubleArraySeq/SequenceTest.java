@@ -42,25 +42,25 @@ public class SequenceTest
                        break;
                case 6: addNumBefore(currSeq, sequenceA, sequenceB, keyboard);
                        break;
-               case 7: //addNumAfter(currSeq, sequenceA, sequenceB, keyboard);
+               case 7: addNumAfter(currSeq, sequenceA, sequenceB, keyboard);
                        break;
-               case 8: //addNumToEnd(currSeq, sequenceA, sequenceB, keyboard);
+               case 8: addNumToEnd(currSeq, sequenceA, sequenceB, keyboard);
                        break;
-               case 9: //addBtoA(sequenceA, sequenceB);
+               case 9: addBtoA(sequenceA, sequenceB);
                        break;
-               case 10: //deleteAtIndex(currSeq, sequenceA, sequenceB, keyboard);
+               case 10: deleteAtIndex(currSeq, sequenceA, sequenceB, keyboard);
                         break;
-               case 11: //deleteFirst(currSeq, sequenceA, sequenceB, keyboard);
+               case 11: deleteFirst(currSeq, sequenceA, sequenceB);
                         break;
-               case 12: //displayAtIndex(currSeq, sequenceA, sequenceB, keyboard);
+               case 12: displayAtIndex(currSeq, sequenceA, sequenceB, keyboard);
                         break;
-               case 13: //displayLast(currSeq, sequenceA, sequenceB);
+               case 13: displayLast(currSeq, sequenceA, sequenceB);
                         break;
-               case 14: //trimSequence(currSeq, sequenceA, sequenceB);
+               case 14: trimSequence(sequenceA, sequenceB);
                         break;
-               case 15: //cloneSequence(currSeq, sequenceA, sequenceB);
+               case 15: cloneSequence(currSeq, sequenceA, sequenceB);
                         break;
-               case 16: //mergeSequence(sequenceA, sequenceB);
+               case 16: mergeSequence(sequenceA, sequenceB);
                         break;
                case 17: cont = false;
                         break;
@@ -76,6 +76,11 @@ public class SequenceTest
      } while(cont);  
            
     System.out.println("Have a nice day!");
+   }
+   
+   public static void addBtoA(DoubleArraySeq A, DoubleArraySeq B)
+   {
+      A.addAll(B);
    }
    
    public static void printBoth(DoubleArraySeq A, DoubleArraySeq B)
@@ -143,6 +148,46 @@ public class SequenceTest
       }
    }
    
+   public static void addNumAfter(char currSeq, DoubleArraySeq A, DoubleArraySeq B, Scanner keyboard) throws InputMismatchException
+   {
+      double numToAdd;
+      int index;
+      if(currSeq == 'A')
+      {
+         System.out.println("There are " + A.size() + " elements in sequence A, which number do you want to insert after : ");
+         index = keyboard.nextInt();
+         
+         if(index <= A.size())
+         {
+            System.out.println("Inserting after the " + index + " element.");
+            A.setCurrent(index - 1);
+            
+            System.out.print("What number do you want to insert : ");
+            numToAdd = keyboard.nextDouble();
+            
+            A.addAfter(numToAdd);
+         } else {
+            System.out.println("Out of range of A!");
+         }
+      } else {
+         System.out.println("There are " + B.size() + " elements in sequence B, which number do you want to insert after : ");
+         index = keyboard.nextInt();
+         
+         if(index <= B.size())
+         {
+            System.out.println("Inserting after the " + index + " element.");
+            B.setCurrent(index - 1);
+            
+            System.out.print("What number do you want to insert : ");
+            numToAdd = keyboard.nextDouble();
+            
+            B.addAfter(numToAdd);
+         } else {
+            System.out.println("Out of range of B!");
+         }
+      }
+   }
+   
    public static void addToFront(char currSeq, DoubleArraySeq A, DoubleArraySeq B, Scanner keyboard) throws InputMismatchException
    {
       double numToAdd;
@@ -154,7 +199,131 @@ public class SequenceTest
       else
          B.addFront(numToAdd);
    }
+   
+   public static void addNumToEnd(char currSeq, DoubleArraySeq A, DoubleArraySeq B, Scanner keyboard) throws InputMismatchException
+   {
+      double numToAdd;
+      System.out.print("Please enter the number you would like to add to the front of " + currSeq + " :");
+      numToAdd = keyboard.nextDouble();
       
+      if(currSeq == 'A')
+         A.addEnd(numToAdd);
+      else
+         B.addEnd(numToAdd);
+   }
+   
+   public static void deleteFirst(char currSeq, DoubleArraySeq A, DoubleArraySeq B) 
+   {      
+      if(currSeq == 'A')
+         A.removeFront();
+      else
+         B.removeFront();
+   }
+   
+   public static void deleteAtIndex(char currSeq, DoubleArraySeq A, DoubleArraySeq B, Scanner keyboard) throws InputMismatchException
+   {
+      double numToDel;
+      int index;
+      if(currSeq == 'A')
+      {
+         System.out.println("There are " + A.size() + " elements in sequence A, which number do you want to delete : ");
+         index = keyboard.nextInt();
+         
+         if(index <= A.size())
+         {
+            System.out.println("Deleting the " + index + " element.");
+            A.setCurrent(index - 1);            
+            A.removeCurrent();
+         } else {
+            System.out.println("Out of range of A!");
+         }
+      } else {
+         System.out.println("There are " + B.size() + " elements in sequence B, which number do you want to delete : ");
+         index = keyboard.nextInt();
+         
+         if(index <= B.size())
+         {
+            System.out.println("Deleting the " + index + " element.");
+            B.setCurrent(index - 1);
+            B.removeCurrent();
+         } else {
+            System.out.println("Out of range of B!");
+         }
+      }
+   }
+   
+   public static void displayAtIndex(char currSeq, DoubleArraySeq A, DoubleArraySeq B, Scanner keyboard) throws InputMismatchException
+   {
+      double numToDel;
+      int index;
+      if(currSeq == 'A')
+      {
+         System.out.println("There are " + A.size() + " elements in sequence A, which number do you want to display : ");
+         index = keyboard.nextInt();
+         
+         if(index <= A.size())
+         {
+            A.setCurrent(index - 1);            
+            System.out.println("The element is " + A.getCurrent());
+         } else {
+            System.out.println("Out of range of A!");
+         }
+      } else {
+         System.out.println("There are " + B.size() + " elements in sequence B, which number do you want to display : ");
+         index = keyboard.nextInt();
+         
+         if(index <= B.size())
+         {
+            B.setCurrent(index - 1);
+            System.out.println("The element is " + B.getCurrent());
+         } else {
+            System.out.println("Out of range of B!");
+         }
+      }
+   }
+   
+   public static void displayLast(char curr, DoubleArraySeq A, DoubleArraySeq B)
+   {
+    
+       if(curr == 'A')
+       {
+          A.setCurrentLast();
+          System.out.println(A.getCurrent());
+       }
+       else
+       {
+          B.setCurrentLast();
+          System.out.println(B.getCurrent());
+       }
+   }
+   
+   public static void trimSequence(DoubleArraySeq A, DoubleArraySeq B)
+   {
+      A.trimToSize();
+      B.trimToSize();
+   }
+
+   public static void cloneSequence(char curr, DoubleArraySeq A, DoubleArraySeq B)
+   {
+      DoubleArraySeq C;
+      if (curr == 'A')
+      {     
+         C = A.clone();
+         System.out.println("The cloned sequence is " + C);
+      }
+      else
+      {
+         C = B.clone();
+         System.out.println("The cloned sequence is " + C);
+      }
+   }
+   
+   public static void mergeSequence(DoubleArraySeq A, DoubleArraySeq B)
+   {
+      DoubleArraySeq C = DoubleArraySeq.concatenation(A, B);
+      System.out.println("The new sequence is " + C);
+   }
+   
    
    public static int mainMenu(char curr, Scanner keyboard) throws InputMismatchException
    {
