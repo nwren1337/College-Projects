@@ -118,8 +118,32 @@ public class DoubleArraySeq implements Cloneable
    **/
    public void addAfter(double element)
    {
-      // Implemented by student.
+      // Implemented by Caleb.
+      int i;
+      if(manyItems == data.length)
+      {
+         ensureCapacity(manyItems*2 + 1);
+      }
+      if (!isCurrent())
+      {
+         currentIndex = 0;
+      }
+      for(i = manyItems; i > currentIndex; i--) 
+      {
+         data[i + 1] = data[i];        
+      }
+      if(currentIndex == manyItems)
+      {
+         data[currentIndex] = element;
+         manyItems++;
+      }
+      else
+      {
+         data[currentIndex + 1] = element;
+         manyItems++;
+      }
    }
+   
 
 
    /**
@@ -208,7 +232,7 @@ public class DoubleArraySeq implements Cloneable
 
       manyItems++;
       
-      double[] tmp = new double[manyItems + 1];
+      double[] tmp = new double[data.length];
       System.arraycopy(data, 0, tmp, 1, manyItems);
       tmp[0] = element;
       data = tmp;
@@ -268,7 +292,21 @@ public class DoubleArraySeq implements Cloneable
    **/
    public void addAll(DoubleArraySeq addend)
    {
-      // Implemented by student.
+      // Implemented by Caleb.
+      if (manyItems == data.length)
+      {
+         ensureCapacity(manyItems*2 + 1);
+      }
+      int i = manyItems;
+      for(int j = 0; j < addend.size(); j++)
+      {
+         manyItems++;
+         data[i] = addend.data[j];
+         i++;
+      }
+         
+   
+
    }   
    
    
@@ -355,28 +393,8 @@ public class DoubleArraySeq implements Cloneable
    **/   
    public static DoubleArraySeq concatenation(DoubleArraySeq s1, DoubleArraySeq s2)
    {
-      /* this is bugged for some unknown reason
-       * Data is not being initialized to the right length
-      int totsize = s1.manyItems + s2.manyItems;
-      DoubleArraySeq concat = new DoubleArraySeq(totsize);
-      System.arraycopy(s1.data, 0, concat.data, 0, s1.manyItems);
-      System.arraycopy(s2.data, 0, concat.data, s1.manyItems, totsize - 1); */
-      
-      DoubleArraySeq concat = new DoubleArraySeq();
-      
-      for(int i = 0; i < s1.manyItems; i++)
-      {
-         concat.addEnd(s1.data[i]);
-      }
-      
-      for(int i = 0; i < s2.manyItems; i++)
-      {
-         concat.addEnd(s2.data[i]);
-      }
-      
-      concat.currentIndex = concat.manyItems;
-      
-      return concat;
+      // Implemented by student.
+      return null;
    }
 
 
@@ -434,7 +452,7 @@ public class DoubleArraySeq implements Cloneable
    public double getCurrent( )
    {
       // Implemented by student.
-      return data[currentIndex];
+      return currentIndex;
    }
 
 
@@ -448,8 +466,15 @@ public class DoubleArraySeq implements Cloneable
    **/
    public boolean isCurrent( )
    {
-      // Implemented by student.
-      return currentIndex < manyItems;
+      // Implemented by Caleb.
+      if(currentIndex >= 0)
+      {
+         return true;
+      }
+      else
+      {
+         return false;
+      }
    }
               
    /**
@@ -468,7 +493,14 @@ public class DoubleArraySeq implements Cloneable
    **/
    public void removeCurrent( )
    {
-      // Implemented by student.
+      // Implemented by Caleb.
+      int i = manyItems;
+      for(int j = currentIndex; j < i; j++)
+      {
+         data[j] = data[j+1];
+      }
+      currentIndex = currentIndex + 1;
+      
    }
                  
    
@@ -498,7 +530,39 @@ public class DoubleArraySeq implements Cloneable
       // Implemented by student.
       currentIndex = 0;
    }
-   
+   /**
+   *Sets the current element at the front of this sequence
+   *@param - none
+   *@postcondition
+   *  The last element is now the current element.
+      if the sequence is empty there is no current element.
+   **/
+   public void setCurrentLast( )
+   {
+      int i = manyItems;
+      currentIndex = i;
+   }
+   /**
+   *Sets the current element to the element chosen by the user
+   *@param - element
+   *  an elment given by the user
+   *@postcondition
+   *  The current element is set at the element chosen by the user
+   **/
+   public void setCurrent(int element)
+   {
+      int i = element;
+      currentIndex = i;
+   }
+   /**
+   *Checks to see if two sequences are equal
+   *@param - an object
+   *  Another sequence given by the user
+   *@return
+   *  A boolean of if it is equal or not
+   *@exception - IlleagalArgumentException
+   *  Indicates the wrong class was passed through
+   **/
    public boolean equals(Object obj)
    {
       if(obj instanceof DoubleArraySeq)
@@ -551,31 +615,42 @@ public class DoubleArraySeq implements Cloneable
          data = trimmedArray;
       }
    }
-   
-  /**
-   * Gets nth element from the sequence. Sets current index to nth element.
-   * @param n
-   *   The index of the element to get
-   * @postcondition
-   *   Current Index is set to n
-   * @return 
-   *   value of nth element
-   * @exception IllegalStateException
-   *   Indicates that either the sequence is empty or n is larger than the number of items 
+   /**
+   *A method to remove the element at the front of the sequence.
+   *If there is a next element, make that element the current element. 
+   *@param - none
+   *@postcondition
+   *  element at the front of the list is removed,  
+   *  the next element is now the current.
+   *@exception IlleagelStateException
+   *  Indicates the list is empty
    **/
-   public double getElement(int n)
+   public void removeFront( )
    {
-      if(n < manyItems)
+      int j = manyItems;
+      for(int i = 0; i < j; i++)
       {
-         currentIndex = n - 1;
-         return data[n - 1];
+         data[i] = data[i + 1];
       }
-      else
+   }
+   /**
+   *A method to output all elements in order separated by a space
+   *@param - none
+   *@return
+   *  The list is printed out
+   *@exception IlleagelStateException
+   *  Indicates the sequence is empty 
+   **/
+   public String toString()
+   {
+      String list = "";
+      for(int i = 0; i < manyItems; i++)
       {
-         throw new IllegalStateException("Sequence empty or nth element is larger than the number of items!");
+         list += (data[i] + " ");
       }
+      return list;
+      
    }
       
 }
            
-
