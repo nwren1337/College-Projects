@@ -630,15 +630,18 @@ public class DoubleArraySeq implements Cloneable
    *@postcondition
    *  element at the front of the list is removed,  
    *  the next element is now the current.
-   *@exception IlleagelStateException
+   *@exception IllegalStateException
    *  Indicates the list is empty
    **/
    public void removeFront( )
    {
-      int j = manyItems;
-      for(int i = 0; i < j; i++)
+      if(manyItems > 0)
       {
-         data[i] = data[i + 1];
+         double[] temp = new double[data.length];
+         System.arraycopy(data, 1, temp, 0, --manyItems);
+         data = temp;
+      } else {
+         throw new IllegalStateException("The sequence is empty!");
       }
    }
    /**
