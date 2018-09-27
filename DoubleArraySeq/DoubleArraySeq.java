@@ -501,13 +501,11 @@ public class DoubleArraySeq implements Cloneable
    public void removeCurrent( )
    {
       // Implemented by Caleb.
-      int i = manyItems;
-      for(int j = currentIndex; j < i; j++)
+      manyItems--;
+      for(int j = currentIndex; j < manyItems; j++)
       {
          data[j] = data[j+1];
-      }
-      currentIndex = currentIndex + 1;
-      
+      }      
    }
                  
    
