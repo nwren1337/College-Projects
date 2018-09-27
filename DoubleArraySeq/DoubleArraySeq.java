@@ -1,4 +1,6 @@
 // File: DoubleArraySeq.java 
+//Implemented by Nate Wren and Caleb Secor
+//9/27/2018
 
 // This is an assignment for students to complete after reading Chapter 3 of
 // "Data Structures and Other Objects Using Java" by Michael Main.
