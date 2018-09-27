@@ -293,9 +293,9 @@ public class DoubleArraySeq implements Cloneable
    public void addAll(DoubleArraySeq addend)
    {
       // Implemented by Caleb.
-      if (manyItems == data.length)
+      if ((this.manyItems + addend.manyItems) >= data.length)
       {
-         ensureCapacity(manyItems*2 + 1);
+         ensureCapacity((this.manyItems + addend.manyItems)*2 + 1);
       }
       int i = manyItems;
       for(int j = 0; j < addend.size(); j++)
@@ -394,7 +394,21 @@ public class DoubleArraySeq implements Cloneable
    public static DoubleArraySeq concatenation(DoubleArraySeq s1, DoubleArraySeq s2)
    {
       // Implemented by student.
-      return null;
+      DoubleArraySeq concat = new DoubleArraySeq();
+      
+      for(int i = 0; i < s1.manyItems; i++)
+      {
+         concat.addEnd(s1.data[i]);
+      }
+      
+      for(int i = 0; i < s2.manyItems; i++)
+      {
+         concat.addEnd(s2.data[i]);
+      }
+      
+      concat.currentIndex = concat.manyItems;
+      
+      return concat;
    }
 
 
@@ -452,7 +466,7 @@ public class DoubleArraySeq implements Cloneable
    public double getCurrent( )
    {
       // Implemented by student.
-      return currentIndex;
+      return data[currentIndex];
    }
 
 
@@ -467,14 +481,7 @@ public class DoubleArraySeq implements Cloneable
    public boolean isCurrent( )
    {
       // Implemented by Caleb.
-      if(currentIndex >= 0)
-      {
-         return true;
-      }
-      else
-      {
-         return false;
-      }
+      return currentIndex < manyItems;
    }
               
    /**
@@ -539,8 +546,7 @@ public class DoubleArraySeq implements Cloneable
    **/
    public void setCurrentLast( )
    {
-      int i = manyItems;
-      currentIndex = i;
+      currentIndex = manyItems;
    }
    /**
    *Sets the current element to the element chosen by the user
@@ -548,11 +554,15 @@ public class DoubleArraySeq implements Cloneable
    *  an elment given by the user
    *@postcondition
    *  The current element is set at the element chosen by the user
+   *@throws IllegalStateException
+   *        Thrown if input is larger than number of items in sequence
    **/
    public void setCurrent(int element)
    {
-      int i = element;
-      currentIndex = i;
+      if(element < manyItems)
+         currentIndex = element;
+      else
+         throw new IllegalStateException("Element is larger than the number of items in the sequence!");
    }
    /**
    *Checks to see if two sequences are equal
