@@ -69,9 +69,14 @@ public class SequenceTest
                         break;
             }
             
+        } catch (InputMismatchException e) {
+            System.out.println("Number expected but you entered a word!"); 
+            keyboard.nextLine();
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
         } catch(Exception e) {
             System.out.println(e.getMessage());
-            keyboard.next();
+            
         }
      } while(cont);  
            
@@ -114,37 +119,51 @@ public class SequenceTest
       int index;
       if(currSeq == 'A')
       {
-         System.out.println("There are " + A.size() + " elements in sequence A, which number do you want to insert before : ");
-         index = keyboard.nextInt();
-         
-         if(index <= A.size())
+         if(A.size() > 0)
          {
-            System.out.println("Inserting before the " + index + " element.");
-            A.setCurrent(index - 1);
+            System.out.print("There are " + A.size() + " elements in sequence A, which number do you want to insert before : ");
+            index = keyboard.nextInt();
             
-            System.out.print("What number do you want to insert : ");
-            numToAdd = keyboard.nextDouble();
-            
-            A.addBefore(numToAdd);
+            if(index <= A.size() && index > 0)
+            {
+               
+               System.out.println("Inserting before the " + index + " element.");
+               A.setCurrent(index - 1);
+               
+               System.out.print("What number do you want to insert : ");
+               numToAdd = keyboard.nextDouble();
+               
+               A.addBefore(numToAdd);
+            } else {
+               System.out.println("Out of range of A!");
+            }         
          } else {
-            System.out.println("Out of range of A!");
+            System.out.println("A is empty, adding to front!");
+            addToFront(currSeq, A, B, keyboard);
          }
+            
       } else {
-         System.out.println("There are " + B.size() + " elements in sequence B, which number do you want to insert before : ");
-         index = keyboard.nextInt();
-         
-         if(index <= B.size())
+         if(B.size() > 0)
          {
-            System.out.println("Inserting before the " + index + " element.");
-            B.setCurrent(index - 1);
+            System.out.print("There are " + B.size() + " elements in sequence B, which number do you want to insert before : ");
+            index = keyboard.nextInt();
             
-            System.out.print("What number do you want to insert : ");
-            numToAdd = keyboard.nextDouble();
-            
-            B.addBefore(numToAdd);
-         } else {
-            System.out.println("Out of range of B!");
-         }
+            if(index <= B.size() && index > 0)
+            {
+               System.out.println("Inserting before the " + index + " element.");
+               B.setCurrent(index - 1);
+               
+               System.out.print("What number do you want to insert : ");
+               numToAdd = keyboard.nextDouble();
+               
+               B.addBefore(numToAdd);
+            } else {
+               System.out.println("Out of range of B!");
+            }
+        } else {
+            System.out.println("B is empty! Adding to front");
+            addToFront(currSeq, A, B, keyboard);
+        }
       }
    }
    
@@ -154,36 +173,48 @@ public class SequenceTest
       int index;
       if(currSeq == 'A')
       {
-         System.out.println("There are " + A.size() + " elements in sequence A, which number do you want to insert after : ");
-         index = keyboard.nextInt();
-         
-         if(index <= A.size())
+         if(A.size() > 0)
          {
-            System.out.println("Inserting after the " + index + " element.");
-            A.setCurrent(index - 1);
+            System.out.print("There are " + A.size() + " elements in sequence A, which number do you want to insert after : ");
+            index = keyboard.nextInt();
             
-            System.out.print("What number do you want to insert : ");
-            numToAdd = keyboard.nextDouble();
-            
-            A.addAfter(numToAdd);
+            if(index <= A.size() && index > 0)
+            {
+               System.out.println("Inserting after the " + index + " element.");
+               A.setCurrent(index - 1);
+               
+               System.out.print("What number do you want to insert : ");
+               numToAdd = keyboard.nextDouble();
+               
+               A.addAfter(numToAdd);
+            } else {
+               System.out.println("Out of range of A!");
+            }
          } else {
-            System.out.println("Out of range of A!");
+            System.out.println("A is empty! Adding to front.");
+            addToFront(currSeq, A, B, keyboard);
          }
       } else {
-         System.out.println("There are " + B.size() + " elements in sequence B, which number do you want to insert after : ");
-         index = keyboard.nextInt();
-         
-         if(index <= B.size())
+         if(B.size() > 0)
          {
-            System.out.println("Inserting after the " + index + " element.");
-            B.setCurrent(index - 1);
+            System.out.print("There are " + B.size() + " elements in sequence B, which number do you want to insert after : ");
+            index = keyboard.nextInt();
             
-            System.out.print("What number do you want to insert : ");
-            numToAdd = keyboard.nextDouble();
-            
-            B.addAfter(numToAdd);
+            if(index <= B.size() && index > 0)
+            {
+               System.out.println("Inserting after the " + index + " element.");
+               B.setCurrent(index - 1);
+               
+               System.out.print("What number do you want to insert : ");
+               numToAdd = keyboard.nextDouble();
+               
+               B.addAfter(numToAdd);
+            } else {
+               System.out.println("Out of range of B!");
+            }
          } else {
-            System.out.println("Out of range of B!");
+            System.out.println("B is empty! Adding to front!");
+            addToFront(currSeq, A, B, keyboard);
          }
       }
    }
@@ -203,7 +234,7 @@ public class SequenceTest
    public static void addNumToEnd(char currSeq, DoubleArraySeq A, DoubleArraySeq B, Scanner keyboard) throws InputMismatchException
    {
       double numToAdd;
-      System.out.print("Please enter the number you would like to add to the front of " + currSeq + " :");
+      System.out.print("Please enter the number you would like to add to the end of " + currSeq + " :");
       numToAdd = keyboard.nextDouble();
       
       if(currSeq == 'A')
@@ -226,28 +257,38 @@ public class SequenceTest
       int index;
       if(currSeq == 'A')
       {
-         System.out.println("There are " + A.size() + " elements in sequence A, which number do you want to delete : ");
-         index = keyboard.nextInt();
-         
-         if(index <= A.size())
+         if(A.size() > 0)
          {
-            System.out.println("Deleting the " + index + " element.");
-            A.setCurrent(index - 1);            
-            A.removeCurrent();
+            System.out.print("There are " + A.size() + " elements in sequence A, which number do you want to delete : ");
+            index = keyboard.nextInt();
+            
+            if(index <= A.size() && index > 0)
+            {
+               System.out.println("Deleting the " + index + " element.");
+               A.setCurrent(index - 1);            
+               A.removeCurrent();
+            } else {
+               System.out.println("Out of range of A!");
+            }
          } else {
-            System.out.println("Out of range of A!");
+            System.out.println("A is empty!");
          }
       } else {
-         System.out.println("There are " + B.size() + " elements in sequence B, which number do you want to delete : ");
-         index = keyboard.nextInt();
-         
-         if(index <= B.size())
+         if(B.size() > 0)
          {
-            System.out.println("Deleting the " + index + " element.");
-            B.setCurrent(index - 1);
-            B.removeCurrent();
+            System.out.print("There are " + B.size() + " elements in sequence B, which number do you want to delete : ");
+            index = keyboard.nextInt();
+            
+            if(index <= B.size() && index > 0)
+            {
+               System.out.println("Deleting the " + index + " element.");
+               B.setCurrent(index - 1);
+               B.removeCurrent();
+            } else {
+               System.out.println("Out of range of B!");
+            }
          } else {
-            System.out.println("Out of range of B!");
+            System.out.println("B is empty!");
          }
       }
    }
@@ -258,26 +299,36 @@ public class SequenceTest
       int index;
       if(currSeq == 'A')
       {
-         System.out.println("There are " + A.size() + " elements in sequence A, which number do you want to display : ");
-         index = keyboard.nextInt();
-         
-         if(index <= A.size())
+         if(A.size() > 0)
          {
-            A.setCurrent(index - 1);            
-            System.out.println("The element is " + A.getCurrent());
+            System.out.print("There are " + A.size() + " elements in sequence A, which number do you want to display : ");
+            index = keyboard.nextInt();
+            
+            if(index <= A.size() && index > 0)
+            {
+               A.setCurrent(index - 1);            
+               System.out.println("The element is " + A.getCurrent());
+            } else {
+               System.out.println("Out of range of A!");
+            }
          } else {
-            System.out.println("Out of range of A!");
+            System.out.println("A is empty!");
          }
       } else {
-         System.out.println("There are " + B.size() + " elements in sequence B, which number do you want to display : ");
-         index = keyboard.nextInt();
-         
-         if(index <= B.size())
+         if(B.size() > 0)
          {
-            B.setCurrent(index - 1);
-            System.out.println("The element is " + B.getCurrent());
+            System.out.print("There are " + B.size() + " elements in sequence B, which number do you want to display : ");
+            index = keyboard.nextInt();
+            
+            if(index <= B.size() && index > 0)
+            {
+               B.setCurrent(index - 1);
+               System.out.println("The element is " + B.getCurrent());
+            } else {
+               System.out.println("Out of range of B!");
+            }
          } else {
-            System.out.println("Out of range of B!");
+            System.out.println("B is empty");
          }
       }
    }
