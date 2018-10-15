@@ -31,7 +31,7 @@
       
       while(i < reversed.length())
       {
-         for(int j = 0; j < 3; j++)
+         for(int j = 0; (j < 3) && (j + i < reversed.length()); j++)
          {
             temp.append(reversed.charAt(j + i));
          }
