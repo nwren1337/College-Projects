@@ -9,5 +9,10 @@ public class Tester5000
       UnboundedInt test2 = new UnboundedInt("1000");
       
       System.out.println(test2);
+      
+      UnboundedInt test3 = new UnboundedInt("1000");
+      
+      System.out.println(test.equals(test2));
+      System.out.println(test2.equals(test3));
    }
 }

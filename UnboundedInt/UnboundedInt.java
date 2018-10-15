@@ -57,6 +57,34 @@
       cursor = head;
    }
    
+   public boolean equals(Object obj)
+   {
+      UnboundedInt other;
+      boolean eq = false;
+      
+      if(obj instanceof UnboundedInt)
+      {
+         other = (UnboundedInt) obj;
+         other.start();
+         this.start();
+         while(this.cursor != null && other.cursor != null)
+         {
+            if(this.cursor.getData() != other.cursor.getData())
+            {
+               return false;
+            }
+            
+            this.cursor = this.cursor.getLink();
+            other.cursor = other.cursor.getLink();
+         }
+         
+         return true;
+       }
+       
+       return false;
+    }
+         
+   
    public void start()
    {
       cursor = head;
