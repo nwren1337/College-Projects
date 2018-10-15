@@ -57,6 +57,36 @@
       cursor = head;
    }
    
+   public void start()
+   {
+      cursor = head;
+   }
+   
+   public void advance()
+   {
+      if(cursor != null)
+      {
+         cursor = cursor.getLink();
+      } 
+      else
+      {
+         throw new IllegalStateException("The cursor cannot advance!");
+      }
+    }
+    
+   public int getNodeValue()
+   {
+      if(cursor != null)
+      {
+         return cursor.getData();
+      } 
+      else
+      {
+         throw new IllegalStateException("The cursor is null!");
+      }
+    }
+    
+   
    public String toString()
    {
       StringBuilder num = new StringBuilder();
