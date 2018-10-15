@@ -78,7 +78,9 @@
             other.cursor = other.cursor.getLink();
          }
          
-         return true;
+         eq = (this.numNodes == other.numNodes);
+         
+         return eq;
        }
        
        return false;

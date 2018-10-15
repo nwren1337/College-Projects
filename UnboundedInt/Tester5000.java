@@ -14,5 +14,10 @@ public class Tester5000
       
       System.out.println(test.equals(test2));
       System.out.println(test2.equals(test3));
+      
+      UnboundedInt test4 = new UnboundedInt("100100100100");
+      UnboundedInt test5 = new UnboundedInt("100100100");
+      
+      System.out.println(test4.equals(test5));
    }
 }
