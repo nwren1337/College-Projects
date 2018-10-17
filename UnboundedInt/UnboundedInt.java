@@ -85,8 +85,183 @@
        
        return false;
     }
-         
-   
+   public UnboundedInt add(UnboundedInt pass)
+   {
+      String tempS = "";
+      int carry = 0;
+      UnboundedInt together = new UnboundedInt("");
+      IntNode tempCurrA, tempCurrB;
+      tempCurrA = this.head;
+      tempCurrB = pass.head;
+      int valueA, valueB, valueC;
+      valueA = tempCurrA.getData();
+      valueB = tempCurrB.getData();
+      valueC = valueA + valueB;
+      tempCurrA = tempCurrA.getLink();
+      tempCurrB = tempCurrB.getLink();
+      if(valueC > 1000)
+      {
+         valueC = valueC - 1000;
+         tempS = Integer.toString(valueC);
+         StringBuilder reversal = new StringBuilder(tempS);
+         reversal = reversal.reverse();
+         tempS = reversal.toString();
+         valueC = Integer.parseInt(tempS);
+         together.head = new IntNode(valueC, null);
+         together.tail = together.head;
+         together.cursor = together.head;
+         together.numNodes++;
+         carry = 1;
+      }
+      else
+      {
+         together.head = new IntNode(valueC, null);
+         together.tail = together.head;
+         together.cursor = together.head;
+         together.numNodes++;
+      }
+      for(int i = 0; i < this.numNodes || i < pass.numNodes; i++)
+      {
+         if(tempCurrA != null && tempCurrB != null)
+         {
+            for(int k = 0; k < this.numNodes || k < pass.numNodes; k++)
+            {
+               if(tempCurrA != null && tempCurrB != null)
+               {
+                  valueA = tempCurrA.getData();
+                  valueB = tempCurrB.getData();
+                  valueC = valueA + valueB;
+                  tempCurrA = tempCurrA.getLink();
+                  tempCurrB = tempCurrB.getLink();
+                  if(carry == 1)
+                  {
+                     together.cursor.setLink(new IntNode(valueC + 1, null));
+                     together.cursor = together.cursor.getLink();
+                     together.tail = together.cursor;
+                     together.numNodes++;
+                     carry = 0;
+                 }
+                 else if(carry == 1 && valueC > 1000)
+                 {
+                    valueC = valueC - 1000;
+                    valueC = valueC + 1;
+                    together.cursor.setLink(new IntNode(valueC, null));
+                    together.cursor = together.cursor.getLink();
+                    together.numNodes++;
+                 }
+                 else if(valueC > 1000 && carry != 1)
+                 {
+                    valueC = valueC - 1000;
+                    valueC = valueC + 1;
+                    together.cursor.setLink(new IntNode(valueC, null));
+                    together.cursor = together.cursor.getLink();
+                    together.numNodes++;
+                    carry = 0;
+                 }
+                 else{
+                    together.cursor.setLink(new IntNode(valueC, null));
+                    together.cursor = together.cursor.getLink();
+                    together.tail = together.cursor;
+                    together.numNodes++;
+                 }
+                  
+               }
+            }
+          }
+          else if(tempCurrA == null && tempCurrB != null)
+          {
+             for(int j = 0; j < pass.numNodes; j++)
+             valueB = tempCurrB.getData();
+             valueC = valueB;
+             tempCurrB = tempCurrB.getLink();
+             if(carry == 1)
+             {
+               valueC = valueC + 1;
+               together.cursor.setLink(new IntNode(valueC, null));
+               together.cursor = together.cursor.getLink();
+               together.tail = together.cursor;
+               carry = 0;
+               together.numNodes++;
+             }
+             else if(carry == 1 && valueC > 1000)
+             {
+                valueC = valueC - 1000;
+                valueC = valueC + 1;
+                together.cursor.setLink(new IntNode(valueC, null));
+                together.cursor = together.cursor.getLink();
+                together.numNodes++;
+             }
+             else if(valueC > 1000 && carry != 1)
+             {
+                valueC = valueC - 1000;
+                valueC = valueC + 1;
+                together.cursor.setLink(new IntNode(valueC, null));
+                together.cursor = together.cursor.getLink();
+                together.numNodes++;
+                carry = 0;
+             }
+             else
+             {
+                together.cursor.setLink(new IntNode(valueC, null));
+                together.cursor = together.cursor.getLink();
+                together.tail = together.cursor;
+                together.numNodes++;
+             }
+          }
+          else if(tempCurrA != null && tempCurrB == null)
+          {
+             for(int m = 0; m < pass.numNodes; m++)
+             valueA = tempCurrA.getData();
+             valueC = valueA;
+             tempCurrA = tempCurrA.getLink();
+             if(carry == 1)
+             {
+               valueC = valueC + 1;
+               together.cursor.setLink(new IntNode(valueC, null));
+               together.cursor = together.cursor.getLink();
+               together.tail = together.cursor;
+               carry = 0;
+               together.numNodes++;
+             }
+             else if(carry == 1 && valueC > 1000)
+             {
+                valueC = valueC - 1000;
+                valueC = valueC + 1;
+                together.cursor.setLink(new IntNode(valueC, null));
+                together.cursor = together.cursor.getLink();
+                together.numNodes++;
+             }
+             else if(valueC > 1000 && carry != 1)
+             {
+                valueC = valueC - 1000;
+                valueC = valueC + 1;
+                together.cursor.setLink(new IntNode(valueC, null));
+                together.cursor = together.cursor.getLink();
+                together.numNodes++;
+                carry = 0;
+             }
+             else{
+                together.cursor.setLink(new IntNode(valueC, null));
+                together.cursor = together.cursor.getLink();
+                together.tail = together.cursor;
+                together.numNodes++;
+             }
+
+          }
+ 
+       }
+       if(carry == 1)
+       {
+       together.cursor.setLink(new IntNode(1, null));
+       together.cursor = together.cursor.getLink();
+       together.tail = together.cursor;
+       together.numNodes++;
+       }
+       together.cursor = together.head;
+       return together;
+       
+   }
+
    public void start()
    {
       cursor = head;
