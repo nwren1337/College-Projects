@@ -144,7 +144,7 @@ public class LargeNumberTester
     *       Number B
    */
 
-  /** public static void multiplyNumbers(UnboundedInt a, UnboundedInt b)
+  /**public static void multiplyNumbers(UnboundedInt a, UnboundedInt b)
    {
       System.out.println(a.multiply(b));
    }
@@ -162,10 +162,10 @@ public class LargeNumberTester
   
    public static void cloneNumber(UnboundedInt a, UnboundedInt b)
    {
-      c = a.clone();
-      System.out.println("The first cloned number is " + c);
+      UnboundedInt c = a.clone();
+      System.out.println("The first cloned number is " + c + ".");
       c = b.clone();
-      System.out.println("The second cloned number is " + c);
+      System.out.println("The second cloned number is " + c + ".");
    }
    
 }
