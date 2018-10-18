@@ -73,6 +73,13 @@
       cursor = head;
    }
    
+   /**
+   * Tests equality of UnboundedInt objects
+   * @param obj
+   *   Other UnboundedInt object
+   * @returns
+   *   true if the two UnboundedInts are equal  
+   **/  
    public boolean equals(Object obj)
    {
       UnboundedInt other;
@@ -102,12 +109,23 @@
        return false;
     }
          
-   
+   /**
+   * Sets the cursor to the start of the UnboundedInt
+   * @postcondition
+   *   cursor at start of the UnboundedInt  
+   **/ 
    public void start()
    {
       cursor = head;
    }
    
+   /**
+   * Advances the cursor to the next IntNode within the UnboundedInt if there is a next node
+   * @postcondition
+   *   Cursor advances to the next node
+   * @throws
+   *   IllegalStateException if the cursor is currently null  
+   **/ 
    public void advance()
    {
       if(cursor != null)
@@ -119,22 +137,31 @@
          throw new IllegalStateException("The cursor cannot advance!");
       }
     }
-    
+   
+   /**
+   * Return the data value of the current IntNode
+   * @return
+   *   Integer between 0-999 that represents the cursor value
+   * @throws
+   *   IllegalStateException if the cursor is currently null  
+   **/ 
    public int getNodeValue()
    {
       if(cursor != null)
       {
-         return cursor.getData();
+         return reverseDigit(cursor.getData());
       } 
       else
       {
          throw new IllegalStateException("The cursor is null!");
       }
     }
-    
+   
+   //Private helper function 
+   //Necessary because the data is stored in reverse in the linked list
    private int reverseDigit(int n)
    {
-      int reverse = 0, lastDigit = 0;
+      int rev = 0, lastDigit = 0;
       
       while(n > 0)
       {
@@ -142,15 +169,24 @@
          lastDigit = n % 10;
          
          //Add to return value increasing the degree
-         reverse = (reverse * 10) + lastDigit;
+         rev = (rev * 10) + lastDigit;
          
          //chop off the digit we just added
          n = n / 10;
       }
       
-      return reverse;
+      return rev;
    }
-    
+   
+   /**
+   * Adds two UnboundedInts together
+   * @param pass
+   *   Second UnboundedInt to add
+   * @return
+   *   new UnboundedInt representing the sum
+   * @throws
+   *   IllegalArgumentException if the passed UnboundedInt was null  
+   **/ 
    public UnboundedInt add(UnboundedInt pass)
    {      
       //If UnboundedInt passed to the function is not null
@@ -329,6 +365,15 @@
       }
    } 
    
+   /**
+   * Multiplies two UnboundedInts together
+   * @param pass
+   *   Second UnboundedInt to add
+   * @return
+   *   new UnboundedInt representing the resultant value
+   * @throws
+   *   IllegalArgumentException if the passed UnboundedInt was null  
+   **/
    public UnboundedInt multiply(UnboundedInt pass)
    {
       if(pass != null)
@@ -419,7 +464,11 @@
       }
    } 
     
-   
+   /**
+   * Convert UnboundedInt to string representation
+   * @return
+   *   String representation of UnboundedInt  
+   **/
    public String toString()
    {
       StringBuilder num = new StringBuilder();
@@ -450,6 +499,13 @@
       return num.reverse().toString();   
    }
   
+  /**
+   * Clones the UnboundedInt to a new UnboundedInt object
+   * @return
+   *   new UnboundedInt with same values in data members
+   * @throws
+   *   RuntimeException if class does not support cloning  
+   **/
   public UnboundedInt clone()
    {
         UnboundedInt answer;
@@ -457,7 +513,6 @@
       try
       {
          answer = (UnboundedInt) super.clone( );
-         answer.head = (IntNode) this.head.super.clone();
       }
       catch (CloneNotSupportedException e)
       {  // This exception should not occur. But if it does, it would probably
