@@ -21,6 +21,16 @@
    IntNode cursor;
    int numNodes;
    
+   /**
+   * Initialize UnboundedInt given string input
+   * @param s
+   *   string representation of a large integer
+   * @postcondition
+   *   UnboundedInt is created 
+   * @throws
+   *   IllegalArgumentException if string cannot be converted to integer
+   **/  
+   
    public UnboundedInt(String s)
    {
       StringBuilder reversed = new StringBuilder(s), temp = new StringBuilder();
@@ -328,100 +338,81 @@
          
          IntNode temp;
          
-         UnboundedInt temp1 = null, temp2 = null, temp3 = null;
+         //Wrapper vars to improve readabilty
+         UnboundedInt left = this, right = pass;
+         
+         UnboundedInt totalSum = new UnboundedInt("0"), tempSum = new UnboundedInt("0"), workingValue = new UnboundedInt("0");
          
          //Temporary string to hold pre-reversed value
          String tempR = new String();
          
          //Temp ints to facilitate calculation 
-         int currDigit = 0, currResult = 0, currOperand = 0, carry = 0, num = 0, tot = 0, i = 1;
+         int leftDigit = 0, rightDigit = 0, mult = 0, carry = 0, currDigit = 0, leftSize = left.numNodes, rightSize = right.numNodes, currNode = 0;
          
          //Set the cursor to the start for both unbounded ints
-         this.start();
-         pass.start();
+         left.start();
+         right.start();
          
-         while(this.cursor != null)
-         {            
-            //Get the integer value of the data from the cursor
-            currDigit = this.cursor.getData();
-                       
-            //The way we have the data structure designed holds the value in reverse order, so we need to swap that back
-            currDigit = reverseDigit(currDigit);
-            
-            
-            
-            while(currDigit > 0)
-            {
-               num = currDigit % 10;
-               
-               temp = pass.cursor;
-               
-               while(temp != null)
-               {
-                  currOperand = temp.getData();
+         while(left.cursor != null)
+         { 
+             leftDigit = left.cursor.getData();
+             
+             leftDigit = reverseDigit(leftDigit);
+             
+             right.start();
+             
+             while(right.cursor != null)
+             {
+                  rightDigit = right.cursor.getData();
                   
-                  currOperand = reverseDigit(currOperand);
+                  rightDigit = reverseDigit(rightDigit);
                   
-                  currResult = (num * currOperand) + carry;
+                  mult = (leftDigit * rightDigit) + carry;
                   
-                  if(currResult < 1000)
+                  if(mult < 1000)
                   {
-                     //Convert to String
-                     tempR = Integer.toString(currResult);
-                  
-                     //Set carry int to 0
+                     tempR = Integer.toString(mult);
+                     
                      carry = 0;
-                  }
+                  } 
                   else
                   {
-                     //Grab the three digits less than 1000
-                     tot = currResult % 1000;
-                 
-                     //Store the carry int
-                     carry = currResult / 1000;
+                     currDigit = mult % 1000;
+                     
+                     tempR = Integer.toString(currDigit); 
+                     
+                     carry = mult / 1000;
+                  }  
                   
-                     //Convert the digits less than 1000 to the string
-                     tempR = Integer.toString(tot);
-                  }
-                  
-                  //Initialize string builder
                   reversed = new StringBuilder(tempR);
-               
-                  //Reverse the value
-                  reversed = reversed.reverse();
-               
-                  //Append to result
-                  result.append(reversed);
                   
-                  temp = temp.getLink();
-               }
-               
-               currDigit /= 10;
-            }
-            
-            for(int j = 0; j < i; j++)
-            {
-               result.append("0");
-            }
-            
-            result = result.reverse();
-            
-            if(temp1 != null)
-            {
-               temp2 = temp1;
-               temp1 = new UnboundedInt(result.toString());
-               temp3 = temp2.add(temp2);
-            }
-            else
-            {
-               temp1 = new UnboundedInt(result.toString());
-            }
-            
-            i++;
-            this.advance();  
+                  reversed = reversed.reverse();
+                  
+                  if(currNode < rightSize)
+                  {
+                     for(int i = 0; i < currNode; i++)
+                     {
+                        reversed.append("000");
+                     }
+                  }
+                     
+                  reversed = reversed.reverse();
+                  
+                  
+                  workingValue = new UnboundedInt(reversed.toString());
+                  
+                  totalSum = totalSum.add(workingValue);
+                  
+                  currNode++;
+                  
+                  right.advance();
+              }
+                  
+                   
+              left.advance();    
          }
          
-         return temp3;
+         return totalSum;
                
       } else {
          throw new IllegalArgumentException("Passed value is null!");
