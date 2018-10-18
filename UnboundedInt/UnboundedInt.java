@@ -6,7 +6,7 @@
  *@version 0.1
  */
  
- public class UnboundedInt
+ public class UnboundedInt implements Cloneable
  {
  
    //Invariant of the UnboundedInt class :
@@ -457,7 +457,7 @@
       try
       {
          answer = (UnboundedInt) super.clone( );
-         answer.head = (IntNode) this.head.super.clone();
+         //answer.head = (IntNode) this.head.super.clone();
       }
       catch (CloneNotSupportedException e)
       {  // This exception should not occur. But if it does, it would probably
