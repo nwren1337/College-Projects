@@ -159,7 +159,7 @@ public class LargeNumberTester
    */
 
 
-   /**
+  
    public static void cloneNumber(UnboundedInt a, UnboundedInt b)
    {
       c = a.clone();
@@ -167,5 +167,5 @@ public class LargeNumberTester
       c = b.clone();
       System.out.println("The second cloned number is " + c);
    }
-   */
+   
 }
