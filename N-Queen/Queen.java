@@ -79,6 +79,16 @@ public class Queen
       return y;
    }
    
+    /**
+    *Accessor method for boundry of N x N board
+    *@returns
+    *    value of bound
+    */
+   public int getBoundry()
+   {
+      return bound;
+   }
+   
    /**
     *Called any time the queen movies location to check if it is valid
     *@param row
