@@ -58,6 +58,18 @@ public class QueenSimulation
       {
          System.out.println("Queen 3 conflicts with Queen 4");
       }
+      
+      LinkedStack<Integer> ints = new LinkedStack<Integer>();
+      
+      ints.push(1);
+      ints.push(2);
+      ints.push(3);
+      ints.push(4);
+      
+      System.out.println(ints.itemAt(0));
+      System.out.println(ints.itemAt(1));
+      System.out.println(ints.itemAt(2));
+      System.out.println(ints.itemAt(3));
          
    }
 }
