@@ -46,6 +46,18 @@ public class QueenSimulation
       } else {
          System.out.println("Queen 1 does not conflict with Queen 2");
       }
+      
+      Queen test3 = new Queen(0,3,4);
+      
+      Queen test4 = new Queen(3,0,4);
+      
+      System.out.println("Queen 3 : " + test3);
+      System.out.println("Queen 4 : " + test4);
+      
+      if(test3.conflicts(test4))
+      {
+         System.out.println("Queen 3 conflicts with Queen 4");
+      }
          
    }
 }
