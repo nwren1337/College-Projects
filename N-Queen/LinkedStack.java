@@ -4,6 +4,7 @@
 
 
 import java.util.EmptyStackException;
+import java.util.NoSuchElementException;
 
 
 /******************************************************************************
@@ -35,7 +36,9 @@ public class LinkedStack<E> implements Cloneable
    //      at the final node.
    //   2. The instance variable top is the head reference of the linked list
    //      of items.
+   //   3. Size is the current number of elements in the stack
    private Node<E> top; 
+   private int size;
 
    /**
    * Initialize an empty stack.
@@ -46,6 +49,7 @@ public class LinkedStack<E> implements Cloneable
    public LinkedStack( )
    {
       top = null;
+      size = 0;
    }
 
    
@@ -136,6 +140,7 @@ public class LinkedStack<E> implements Cloneable
       
       answer = top.getData( );
       top = top.getLink( );
+      size--;
       return answer;
    }    
 
@@ -153,7 +158,38 @@ public class LinkedStack<E> implements Cloneable
    public void push(E item)
    {
       top = new Node<E>(item, top);
+      size++;
    }
+   
+   /**
+   * Get the item that is n elements away from the top
+   * @param - n
+   *     Distance from the top of the stack to check
+   * <dt><b>Precondition:</b><dd>
+   *   This stack is not empty.
+   * <dt><b>Postcondition:</b><dd>
+   *   The return value is the item that is n elements from the top.
+   *   The stack is unchanged
+   * @exception NoSuchElementException
+   *   Indicates that the element does not exist
+   **/ 
+   public E itemAt(int n)
+   {
+      if(n < 0 || n >= this.size)
+         throw new NoSuchElementException();
+      
+      LinkedStack<E> tempStack = this.clone();
+      int s = tempStack.size;
+      
+      for(int i = s; i > (s - n); i--)
+      {
+         tempStack.pop();
+      }
+      
+      return (E) tempStack.peek();
+    }
+      
+      
               
 
    /**
