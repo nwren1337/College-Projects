@@ -50,15 +50,96 @@ public class Queen
     */
    public Queen(int row, int column, int b)
    {
+      bound = b;
+      if(!validLocation(row, column))
+            throw new IllegalArgumentException("Queen at invalid location within boundry : " + bound);
       x = row;
       y = column;
-      bound = b;
-      if(!validLocation())
-         throw new IllegalArgumentException("Queen at invalid location within boundry : " + bound);
+      
    }
    
-   private boolean validLocation()
+   /**
+    *Called any time the queen movies location to check if it is valid
+    *@param row
+    *    x value to test
+    *@param column
+    *    y value to test
+    *@param b
+    *    boundry value
+    *@returns 
+    *    true if row and column are both valid locations within bound
+    */
+   private boolean validLocation(int row, int column)
    {
-      return (x >= 0) && (y >= 0) && (x <= bound) && (y <= bound);
+      return (row >= 0) && (column >= 0) && (row <= bound) && (column <= bound);
    }
+   
+   /**
+    *Attempt to move the queen up one column on the board
+    *@returns 
+    *    true if the queen was able to move, false if the queen was not
+    */
+   public boolean up()
+   {
+      boolean canShift = false;
+      
+      canShift = validLocation(x, y + 1);
+      
+      if(canShift)
+         y = y + 1;
+      
+      return canShift;
+   }
+   
+   /**
+    *Attempt to move the queen down one column on the board
+    *@returns 
+    *    true if the queen was able to move, false if the queen was not
+    */
+   public boolean down()
+   {
+      boolean canShift = false;
+      
+      canShift = validLocation(x, y - 1);
+      
+      if(canShift)
+         y = y - 1;
+      
+      return canShift;
+   }
+   
+   /**
+    *Attempt to move the queen to one position to the left in its row
+    *@returns 
+    *    true if the queen was able to move, false if the queen was not
+    */
+   public boolean left()
+   {
+      boolean canShift = false;
+      
+      canShift = validLocation(x - 1, y);
+      
+      if(canShift)
+         x = x - 1;
+      
+      return canShift;
+   }
+   
+   /**
+    *Attempt to move the queen one position to the right in its row
+    *@returns 
+    *    true if the queen was able to move, false if the queen was not
+    */
+   public boolean right()
+   {
+      boolean canShift = false;
+      
+      canShift = validLocation(x + 1, y);
+      
+      if(canShift)
+         x = x + 1;
+      
+      return canShift;
+   }
+   
 }
