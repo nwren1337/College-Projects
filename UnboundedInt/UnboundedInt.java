@@ -513,10 +513,6 @@
       try
       {
          answer = (UnboundedInt) super.clone( );
-<<<<<<< HEAD
-=======
-         //answer.head = (IntNode) this.head.super.clone();
->>>>>>> a56f2ab17ceab8061128a55f85579750542d38f2
       }
       catch (CloneNotSupportedException e)
       {  // This exception should not occur. But if it does, it would probably
