@@ -11,8 +11,9 @@ public class Queen
 {
    //Invariant of the Queen class
    // 1. x and y represent the position of the Queen in the rows and columns of a chess board respectively
-   // 2. bound is the sise of the N x N grid
-   // 3. x and y must be valid ints such that x,y|{0 <= x,y <= bound}
+   // 2. The rows and columns are indexed from 0
+   // 3. bound is the sise of the N x N grid
+   // 4. x and y must be valid ints such that x,y|{0 <= x,y < bound}
    private int x,y;
    private int bound;
    
@@ -71,7 +72,7 @@ public class Queen
     */
    private boolean validLocation(int row, int column)
    {
-      return (row >= 0) && (column >= 0) && (row <= bound) && (column <= bound);
+      return (row >= 0) && (column >= 0) && (row < bound) && (column < bound);
    }
    
    /**
@@ -142,4 +143,31 @@ public class Queen
       return canShift;
    }
    
+   public boolean conflicts(Queen other)
+   {
+      int numConflicts = 0;
+      
+      //If in the same row
+      if(this.x == other.x)
+         numConflicts++;
+      
+      //If in the same column
+      if(this.y == other.y)
+         numConflicts++;
+      
+      //If we have not yet found a conflict
+      if(numConflicts == 0)
+      {
+         //Test the diagonals
+         numConflicts = diagonalTest(other);
+      }
+      
+      //The other queen conflicts if the number of conflicts found is greater than 0
+      return numConflicts > 0;
+   }
+   
+   private int diagonalTest(Queen other)
+   {  
+      return 0;
+   }
 }
