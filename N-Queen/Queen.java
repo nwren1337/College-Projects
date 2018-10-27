@@ -198,7 +198,73 @@ public class Queen
    
    private int diagonalTest(Queen other)
    {  
-      return 0;
+      int conflicts = 0, tempX, tempY;
+      
+      //check down and to the right
+      tempX = this.x;
+      tempY = this.y;
+      
+      while(tempX < bound && tempY >= 0)
+      {
+         if(tempX == other.x)
+            conflicts++;
+         
+         if(tempY == other.y)
+            conflicts++;
+         
+         tempX++;
+         tempY--;
+      }
+      
+      //check down and to left
+      tempX = this.x;
+      tempY = this.y;
+      
+      while(tempX >= 0 && tempY >= 0)
+      {
+         if(tempX == other.x)
+            conflicts++;
+         
+         if(tempY == other.y)
+            conflicts++;
+         
+         tempX--;
+         tempY--;
+      }
+      
+      //check up and to the right
+      tempX = this.x;
+      tempY = this.y;
+      
+      while(tempX < bound && tempY < bound)
+      {
+         if(tempX == other.x)
+            conflicts++;
+         
+         if(tempY == other.y)
+            conflicts++;
+         
+         tempX++;
+         tempY++;
+      }
+      
+      //check up and to the left
+      tempX = this.x;
+      tempY = this.y;
+      
+      while(tempX >= 0 && tempY < bound)
+      {
+         if(tempX == other.x)
+            conflicts++;
+         
+         if(tempY == other.y)
+            conflicts++;
+         
+         tempX--;
+         tempY++;
+      }
+      
+      return conflicts;
    }
    
    public String toString()
