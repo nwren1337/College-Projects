@@ -18,7 +18,7 @@ public class Queen
    private int bound;
    
    /**
-    *Default constructor intentionally made blank to ensure
+    *Default constructor intentionally made private to ensure
     *the queen is instantiated within a bound
     */
    private Queen()
@@ -169,5 +169,10 @@ public class Queen
    private int diagonalTest(Queen other)
    {  
       return 0;
+   }
+   
+   public String toString()
+   {
+      return "(" + this.x + ", " + this.y + ")";
    }
 }
