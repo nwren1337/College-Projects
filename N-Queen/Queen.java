@@ -60,6 +60,26 @@ public class Queen
    }
    
    /**
+    *Accessor method for row of Queen
+    *@returns
+    *    value of x
+    */
+   public int getRow()
+   {
+      return x;
+   }
+   
+   /**
+    *Accessor method for column of Queen
+    *@returns
+    *    value of y
+    */
+   public int getColumn()
+   {
+      return y;
+   }
+   
+   /**
     *Called any time the queen movies location to check if it is valid
     *@param row
     *    x value to test
