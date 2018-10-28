@@ -175,7 +175,7 @@ public class LinkedStack<E> implements Cloneable
    **/ 
    public E itemAt(int n)
    {
-      if(n < 0 || n >= this.size)
+      if(n < 0 || n > this.size)
          throw new NoSuchElementException();
       
       LinkedStack<E> tempStack = this.clone();

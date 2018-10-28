@@ -10,11 +10,11 @@
 public class Queen
 {
    //Invariant of the Queen class
-   // 1. x and y represent the position of the Queen in the rows and columns of a chess board respectively
+   // 1. column represents horizontal value, row represents the verticle value
    // 2. The rows and columns are indexed from 0
    // 3. bound is the sise of the N x N grid
-   // 4. x and y must be valid ints such that x,y|{0 <= x,y < bound}
-   private int x,y;
+   // 4. column and row must be valid ints such that x,y|{0 <= x,y < bound}
+   private int row,column;
    private int bound;
    
    /**
@@ -33,29 +33,29 @@ public class Queen
     */
    public Queen(int b)
    {
-      x = 0;
-      y = 0;
+      row = 0;
+      column = 0;
       bound = b;
    }
    
    /**
     *Creates a Queen at a specified location on an N x N grid
-    *@param row
+    *@param r
     *    row to place the queen in
-    *@param column
+    *@param c
     *    column to place the queen in
     *@param b
     *    boundary size of the grid
     *@throws IllegalArgumentException
     *    either row or column is outside specified boundry
     */
-   public Queen(int row, int column, int b)
+   public Queen(int c, int r, int b)
    {
       bound = b;
       if(!validLocation(row, column))
             throw new IllegalArgumentException("Queen at invalid location within boundry : " + bound);
-      x = row;
-      y = column;
+      row = r;
+      column = c;
       
    }
    
@@ -66,7 +66,7 @@ public class Queen
     */
    public int getRow()
    {
-      return x;
+      return row;
    }
    
    /**
@@ -76,7 +76,7 @@ public class Queen
     */
    public int getColumn()
    {
-      return y;
+      return column;
    }
    
     /**
@@ -100,9 +100,9 @@ public class Queen
     *@returns 
     *    true if row and column are both valid locations within bound
     */
-   private boolean validLocation(int row, int column)
+   private boolean validLocation(int r, int c)
    {
-      return (row >= 0) && (column >= 0) && (row < bound) && (column < bound);
+      return (r >= 0) && (c >= 0) && (r < bound) && (c < bound);
    }
    
    /**
@@ -114,10 +114,10 @@ public class Queen
    {
       boolean canShift = false;
       
-      canShift = validLocation(x, y + 1);
+      canShift = validLocation(column, row + 1);
       
       if(canShift)
-         y = y + 1;
+         row = row + 1;
       
       return canShift;
    }
@@ -131,10 +131,10 @@ public class Queen
    {
       boolean canShift = false;
       
-      canShift = validLocation(x, y - 1);
+      canShift = validLocation(column, row - 1);
       
       if(canShift)
-         y = y - 1;
+         row = row - 1;
       
       return canShift;
    }
@@ -148,10 +148,10 @@ public class Queen
    {
       boolean canShift = false;
       
-      canShift = validLocation(x - 1, y);
+      canShift = validLocation(column - 1, row);
       
       if(canShift)
-         x = x - 1;
+         column = column - 1;
       
       return canShift;
    }
@@ -165,12 +165,17 @@ public class Queen
    {
       boolean canShift = false;
       
-      canShift = validLocation(x + 1, y);
+      canShift = validLocation(column + 1, row);
       
       if(canShift)
-         x = x + 1;
+         column = column + 1;
       
       return canShift;
+   }
+   
+   public boolean canMoveRight()
+   {
+      return validLocation(column + 1, row);
    }
    
    public boolean conflicts(Queen other)
@@ -178,11 +183,11 @@ public class Queen
       int numConflicts = 0;
       
       //If in the same row
-      if(this.x == other.x)
+      if(this.column == other.column)
          numConflicts++;
       
       //If in the same column
-      if(this.y == other.y)
+      if(this.row == other.row)
          numConflicts++;
       
       //If we have not yet found a conflict
@@ -198,70 +203,58 @@ public class Queen
    
    private int diagonalTest(Queen other)
    {  
-      int conflicts = 0, tempX, tempY;
+      int conflicts = 0, tempColumn, tempRow;
       
       //check down and to the right
-      tempX = this.x;
-      tempY = this.y;
+      tempColumn = this.column;
+      tempRow = this.row;
       
-      while(tempX < bound && tempY >= 0)
+      while(tempColumn < bound && tempRow >= 0)
       {
-         if(tempX == other.x)
+         if(tempColumn == other.column && tempRow == other.row)
             conflicts++;
          
-         if(tempY == other.y)
-            conflicts++;
-         
-         tempX++;
-         tempY--;
+         tempColumn++;
+         tempRow--;
       }
       
       //check down and to left
-      tempX = this.x;
-      tempY = this.y;
+      tempColumn = this.column;
+      tempRow = this.row;
       
-      while(tempX >= 0 && tempY >= 0)
+      while(tempColumn >= 0 && tempRow >= 0)
       {
-         if(tempX == other.x)
+         if(tempColumn == other.column && tempRow == other.row)
             conflicts++;
          
-         if(tempY == other.y)
-            conflicts++;
-         
-         tempX--;
-         tempY--;
+         tempColumn--;
+         tempRow--;
       }
       
       //check up and to the right
-      tempX = this.x;
-      tempY = this.y;
+      tempColumn = this.column;
+      tempRow = this.row;
       
-      while(tempX < bound && tempY < bound)
+      while(tempColumn < bound && tempRow < bound)
       {
-         if(tempX == other.x)
+         if(tempColumn == other.column && tempRow == other.row)
             conflicts++;
          
-         if(tempY == other.y)
-            conflicts++;
-         
-         tempX++;
-         tempY++;
+         tempColumn++;
+         tempRow++;
       }
       
       //check up and to the left
-      tempX = this.x;
-      tempY = this.y;
+      tempColumn = this.column;
+      tempRow = this.row;
       
-      while(tempX >= 0 && tempY < bound)
+      while(tempColumn >= 0 && tempRow < bound)
       {
-         if(tempX == other.x)
+         if(tempColumn == other.column && tempRow == other.row)
             conflicts++;
          
-         if(tempY == other.y)
-            conflicts++;
-         
-         tempX--;
-         tempY++;
+         tempColumn--;
+         tempRow++;
       }
       
       return conflicts;
@@ -269,6 +262,6 @@ public class Queen
    
    public String toString()
    {
-      return "(" + this.x + ", " + this.y + ")";
+      return "(" + this.column + ", " + this.row + ")";
    }
 }

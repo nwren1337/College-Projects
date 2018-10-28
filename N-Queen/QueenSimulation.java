@@ -1,75 +1,86 @@
+import java.util.Scanner;
+
 public class QueenSimulation
 {
    public static void main(String[] args)
    {
-      Queen test1 = new Queen(4);
+      int N = 0, numSolutions = 0;
+      Scanner keyboard = new Scanner(System.in);
       
-      Queen test2 = new Queen(0, 2, 4);
+      System.out.println("This program will place N queens on an N x N chess board in such a way that no queen threatens another.");
+      System.out.print("Please enter the size of the chess board : ");
+      N = keyboard.nextInt();
       
-      System.out.println("Queen 1 : " + test1);
-      System.out.println("Queen 2 : " + test2);
-      System.out.println("Conflicts : " + test1.conflicts(test2));
+      ChessBoard board = new ChessBoard(N);
       
-      if(!test1.down())
-         System.out.println("Could not move Queen 1 down");
+      try {
       
-      System.out.println("Queen 1 : " + test1);
-      System.out.println("Queen 2 : " + test2);
-      
-      if(test2.right())
+         numSolutions = findSolutions(board);
+      } 
+      catch(Exception e)
       {
-         System.out.println("Moved Queen 2 to the right");
+         System.out.println(e.getClass().getCanonicalName());
+         numSolutions = -1;
       }
-      
-      System.out.println("Queen 1 : " + test1);
-      System.out.println("Queen 2 : " + test2);
-      
-      if(test1.up())
-      {
-         System.out.println("Moved Queen 1 up");
-      }
-      
-      System.out.println("Queen 1 : " + test1);
-      System.out.println("Queen 2 : " + test2);
-      
-      if(test2.left())
-      {
-         System.out.println("Moved Queen 2 left");
-      }
-      
-      System.out.println("Queen 1 : " + test1);
-      System.out.println("Queen 2 : " + test2);
-      
-      if(test1.conflicts(test2))
-      {
-         System.out.println("Queen 1 conflicts with Queen 2");
-      } else {
-         System.out.println("Queen 1 does not conflict with Queen 2");
-      }
-      
-      Queen test3 = new Queen(0,3,4);
-      
-      Queen test4 = new Queen(3,0,4);
-      
-      System.out.println("Queen 3 : " + test3);
-      System.out.println("Queen 4 : " + test4);
-      
-      if(test3.conflicts(test4))
-      {
-         System.out.println("Queen 3 conflicts with Queen 4");
-      }
-      
-      LinkedStack<Integer> ints = new LinkedStack<Integer>();
-      
-      ints.push(1);
-      ints.push(2);
-      ints.push(3);
-      ints.push(4);
-      
-      System.out.println(ints.itemAt(0));
-      System.out.println(ints.itemAt(1));
-      System.out.println(ints.itemAt(2));
-      System.out.println(ints.itemAt(3));
          
+      
+      if(numSolutions > 0)
+      {
+         System.out.println("There are " + numSolutions + " solutions to the " + N + " x " + N + " chess board.");
+      } 
+      else if(numSolutions == 0)
+      {
+         System.out.println("No solution exists for an " + N + " x " + N + " Chess board.");
+      }
+      else
+      {
+         System.out.println("Unexpected error occured while filling chess board");
+      }
+     
+      System.out.println("Thank you, have a nice day!");    
    }
+   
+   public static int findSolutions(ChessBoard b)
+   {
+      int solutions = 0, size = b.getSize(), currRow = 1;
+      LinkedStack<Queen> solution;
+      Queen origin = new Queen(size);
+      Queen nextQueen = new Queen(size), lastQueen = new Queen(size);
+      boolean added = b.addQueen(origin);
+      
+      while(b.queensOnBoard() > 0)
+      {
+         if(added)
+         {
+            if(b.queensOnBoard() < size)
+            {
+               lastQueen = b.peekQueen();
+               nextQueen = new Queen(0, lastQueen.getRow() + 1, size);
+               added = b.addQueen(nextQueen);
+            }
+         }
+         else
+         {
+            nextQueen = b.popQueen();
+         }
+
+         
+         while(!added && nextQueen.canMoveRight())
+         {
+            nextQueen.right();
+            added = b.addQueen(nextQueen);
+         }
+         
+         if(b.isComplete())
+         {
+            solution = b.getSolution();
+            //printSolution(solution);
+            solutions++;
+            added = false;
+
+          }
+        }
+        
+        return solutions;
+     }                
 }
