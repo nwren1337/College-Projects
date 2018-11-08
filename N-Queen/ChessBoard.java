@@ -72,6 +72,13 @@ public class ChessBoard
       return !(numQueens < size); 
    }
    
+   public void printBoard()
+   {
+      for(int i = 0; i < queens.size(); i++)
+            System.out.print("Queen #" + i + " : " + queens.itemAt(i) + " ");
+      System.out.println();
+   }
+   
    private boolean validate()
    {  
       int conflicts = 0;
