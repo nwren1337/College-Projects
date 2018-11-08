@@ -107,7 +107,7 @@ public class QueenSimulation
      {
          System.out.print("Solution #" + numSolution + " : ");
          
-         for(int i = 0; i < solution.size(); i++)
+         for(int i = solution.size() - 1 ; i >= 0 ; i--)
             System.out.print(solution.itemAt(i));
             
          System.out.println();
