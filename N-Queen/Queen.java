@@ -202,6 +202,6 @@ public class Queen
    
    public String toString()
    {
-      return "(" + this.column + ", " + this.row + ")";
+      return "(" + this.row + ", " + this.column + ")";
    }
 }
