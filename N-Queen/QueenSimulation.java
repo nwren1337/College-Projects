@@ -5,23 +5,41 @@ public class QueenSimulation
    public static void main(String[] args)
    {
       int N = 0, numSolutions = 0;
+      boolean tryAgain = false, giveOutput = false;
       Scanner keyboard = new Scanner(System.in);
+      String input;
       
-      System.out.println("This program will place N queens on an N x N chess board in such a way that no queen threatens another.");
-      System.out.print("Please enter the size of the chess board : ");
-      N = keyboard.nextInt();
+      do{
       
-      ChessBoard board = new ChessBoard(N);
-      
-      try {
-      
-         numSolutions = findSolutions(board);
-      } 
-      catch(Exception e)
-      {
-         System.out.println(e.getClass().getCanonicalName());
-         numSolutions = -1;
-      }
+         try {
+         
+            System.out.println("This program will place N queens on an N x N chess board in such a way that no queen threatens another.");
+            System.out.print("Please enter the size of the chess board : ");
+            N = keyboard.nextInt();
+            tryAgain = false;
+            ChessBoard board = new ChessBoard(N);
+            
+            System.out.print("Would you like to output the solutions as the program runs? (Y/N) ");
+            input = keyboard.next();
+            
+            if(input.equals("Y") || input.equals("y"))
+               giveOutput = true;
+         
+            numSolutions = findSolutions(board, giveOutput);
+         } 
+         catch(java.util.InputMismatchException e)
+         {
+            System.out.println("Invalid input!");
+            keyboard.next();
+            tryAgain = true;
+            
+         }
+         catch(Exception e)
+         {
+            System.out.println(e.getClass().getCanonicalName());
+            numSolutions = -1;
+         }
+      } while(tryAgain);
          
       
       if(numSolutions > 0)
@@ -40,9 +58,9 @@ public class QueenSimulation
       System.out.println("Thank you, have a nice day!");    
    }
    
-   public static int findSolutions(ChessBoard b)
+   public static int findSolutions(ChessBoard b, boolean giveOutput)
    {
-      int solutions = 0, size = b.getSize(), currRow = 1;
+      int numSolutions = 0, size = b.getSize(), currRow = 1;
       LinkedStack<Queen> solution;
       Queen origin = new Queen(size);
       Queen nextQueen = new Queen(size), lastQueen = new Queen(size);
@@ -74,13 +92,24 @@ public class QueenSimulation
          if(b.isComplete())
          {
             solution = b.getSolution();
-            //printSolution(solution);
-            solutions++;
+            numSolutions++;
+            if(giveOutput)
+               printSolutions(solution, numSolutions);
             added = false;
 
           }
         }
         
-        return solutions;
-     }                
+        return numSolutions;
+     } 
+     
+     public static void printSolutions(LinkedStack<Queen> solution, int numSolution)
+     {
+         System.out.print("Solution #" + numSolution + " : ");
+         
+         for(int i = 0; i < solution.size(); i++)
+            System.out.print(solution.itemAt(i));
+            
+         System.out.println();
+     }        
 }
