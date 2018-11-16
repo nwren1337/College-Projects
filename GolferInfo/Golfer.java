@@ -83,11 +83,21 @@ public class Golfer implements Comparable<Golfer>
       return avgScore;
    }
    
+   
    /* MODIFIERS */
    
    public void setName(String name)
    {
       lastName = name;
+   }
+   
+   public void addNewScore(double sc)
+   {
+      double totScore = avgScore * numRounds;
+      totScore += sc;
+      numRounds++;
+      avgScore = totScore / numRounds;
+      
    }
    
    /* OVERRIDES */
