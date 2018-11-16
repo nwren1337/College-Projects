@@ -5,8 +5,10 @@
  *@version 0.1
  *@since 11/16/2018
  */
-public class Golfer
+public class Golfer implements Comparable<Golfer>
 {
+   /* VARIABLES */
+   
    //Invariant of the Golfer class :
    // 1. Last name is the object used to implement compareTo.
    // 2. All numerical data members are updated together. Ie,
@@ -20,6 +22,8 @@ public class Golfer
    
    public final int HANDICAP_MIN = 0;
    public final int HANDICAP_MAX = 20;
+   
+   /* CONSTRUCTORS */
    
    /**
     *Creates a Golfer with no value for metrics
@@ -55,6 +59,42 @@ public class Golfer
       numRounds = rounds;
       handicap = h;
       avgScore = sc;
+   }
+   
+   /* ACCESSORS */
+   
+   public String getName()
+   {
+      return lastName;
+   }
+   
+   public int getNumRounds()
+   {
+      return numRounds;
+   }
+   
+   public int getHandicap()
+   {
+      return handicap;
+   }
+   
+   public double getAverageScore()
+   {
+      return avgScore;
+   }
+   
+   /* MODIFIERS */
+   
+   public void setName(String name)
+   {
+      lastName = name;
+   }
+   
+   /* INTERFACE IMPLEMENTATION */
+   
+   public int compareTo(Golfer other)
+   {
+      return this.lastName.compareTo(other.lastName);
    }
    
 }
