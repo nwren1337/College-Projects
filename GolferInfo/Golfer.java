@@ -91,7 +91,7 @@ public class Golfer implements Comparable<Golfer>
       lastName = name;
    }
    
-   public void addNewScore(double sc)
+   public void addScore(double sc)
    {
       double totScore = avgScore * numRounds;
       totScore += sc;
