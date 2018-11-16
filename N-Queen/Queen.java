@@ -184,84 +184,24 @@ public class Queen
       
       //If in the same row
       if(this.column == other.column)
-         numConflicts++;
+         return true;
       
       //If in the same column
       if(this.row == other.row)
-         numConflicts++;
+         return true;
       
       //If we have not yet found a conflict
-      if(numConflicts == 0)
+      if(Math.abs(this.column - other.column) == Math.abs(this.row - other.row))
       {
-         //Test the diagonals
-         numConflicts = diagonalTest(other);
+         return true;
       }
       
       //The other queen conflicts if the number of conflicts found is greater than 0
-      return numConflicts > 0;
-   }
-   
-   private int diagonalTest(Queen other)
-   {  
-      int conflicts = 0, tempColumn, tempRow;
-      
-      //check down and to the right
-      tempColumn = this.column;
-      tempRow = this.row;
-      
-      while(tempColumn < bound && tempRow >= 0)
-      {
-         if(tempColumn == other.column && tempRow == other.row)
-            conflicts++;
-         
-         tempColumn++;
-         tempRow--;
-      }
-      
-      //check down and to left
-      tempColumn = this.column;
-      tempRow = this.row;
-      
-      while(tempColumn >= 0 && tempRow >= 0)
-      {
-         if(tempColumn == other.column && tempRow == other.row)
-            conflicts++;
-         
-         tempColumn--;
-         tempRow--;
-      }
-      
-      //check up and to the right
-      tempColumn = this.column;
-      tempRow = this.row;
-      
-      while(tempColumn < bound && tempRow < bound)
-      {
-         if(tempColumn == other.column && tempRow == other.row)
-            conflicts++;
-         
-         tempColumn++;
-         tempRow++;
-      }
-      
-      //check up and to the left
-      tempColumn = this.column;
-      tempRow = this.row;
-      
-      while(tempColumn >= 0 && tempRow < bound)
-      {
-         if(tempColumn == other.column && tempRow == other.row)
-            conflicts++;
-         
-         tempColumn--;
-         tempRow++;
-      }
-      
-      return conflicts;
+      return false;
    }
    
    public String toString()
    {
-      return "(" + this.column + ", " + this.row + ")";
+      return "(" + this.row + ", " + this.column + ")";
    }
 }
