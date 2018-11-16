@@ -11,12 +11,21 @@ public class Golfer
    // 1. Last name is the object used to implement compareTo.
    // 2. All numerical data members are updated together. Ie,
    //    if a new round is added, the average score and handicap
-   //    are recalculated  
+   //    are recalculated 
+   // 3. Handicap has a validate range of 0-20 
    private String lastName;
    private int numRounds;
    private int handicap;
    private double avgScore;
    
+   public final int HANDICAP_MIN = 0;
+   public final int HANDICAP_MAX = 20;
+   
+   /**
+    *Creates a Golfer with no value for metrics
+    *@param name
+    *    name of the golfer
+    */
    public Golfer(String name)
    {
       lastName = name;
@@ -25,8 +34,23 @@ public class Golfer
       avgScore = 0;
    }
    
+   /**
+    *Creates a Queen at a specified location on an N x N grid
+    *@param name
+    *    Name of the golfer
+    *@param rounds
+    *    number of rounds played
+    *@param h
+    *    Golfers handicap, valid range is 0-20
+    *@param sc
+    *    Score of the golfer
+    *@throws IllegalArgumentException
+    *    handicap is not within valid range
+    */
    public Golfer(String name, int rounds, int h, double sc)
    {
+      if((h < HANDICAP_MIN) || (h > HANDICAP_MAX))
+         throw new IllegalArgumentException("Handicap is not within range of 0-20!");
       lastName = name;
       numRounds = rounds;
       handicap = h;
