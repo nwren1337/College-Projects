@@ -31,5 +31,12 @@ public class GolferScoresTree
       System.out.println(test6.getName() + " played " + test6.getNumRounds() + " rounds with a handicap of " + test6.getHandicap() + " and average score of " + test6.getAverageScore());
       
       System.out.println(test6);
+      
+      test1.addScore(10);
+      test1.addScore(15);
+      test1.addScore(20);
+      test1.addScore(18);
+      
+      System.out.println(test1.getName() + "'s average score is " + test1.getAverageScore());
    }
 }
