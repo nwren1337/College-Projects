@@ -90,11 +90,15 @@ public class Golfer implements Comparable<Golfer>
       lastName = name;
    }
    
-   /* INTERFACE IMPLEMENTATION */
+   /* OVERRIDES */
    
    public int compareTo(Golfer other)
    {
       return this.lastName.compareTo(other.lastName);
    }
    
+   public String toString()
+   {
+      return lastName + " " + numRounds + " " + handicap + " " + avgScore;
+   }
 }
