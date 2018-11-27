@@ -38,5 +38,25 @@ public class GolferScoresTree
       test1.addScore(18);
       
       System.out.println(test1.getName() + "'s average score is " + test1.getAverageScore());
+      
+      TreeBag testBag = new TreeBag();
+      
+      testBag.add(test1);
+      testBag.add(test2);
+      testBag.add(test3);
+      testBag.add(test4);
+      testBag.add(test5);
+      
+      testBag.display();
+      
+      if(testBag.retrieve(test1) != null)
+      {
+         System.out.println(test1.getName() + " is in the tree!");
+      }
+      
+      if(testBag.retrieve(test6) == null)
+      {
+         System.out.println(test6.getName() + " is not in the tree!");
+      }
    }
 }
