@@ -45,7 +45,40 @@ public class TreeBag<E extends Comparable> implements Cloneable
    **/
    public void add(E element)
    {      
-      // Implemented by student.
+      if(root == null)
+      {
+         root = new BTNode(element, null, null);
+      }
+      else
+      {
+         recursiveAdd(element, root);
+      }
+   }
+   
+   private void recursiveAdd(E element, BTNode<E> n)
+   {
+      if(element.compareTo(n.getData()) <= 0)
+      {
+         if(n.getLeft() == null)
+         {
+            n.setLeft(new BTNode(element, null, null));
+         }
+         else
+         {
+            recursiveAdd(element, n.getLeft());
+         }
+      }
+      else
+      {
+         if(n.getRight() == null)
+         {
+            n.setRight(new BTNode(element, null, null));
+         }
+         else
+         {
+            recursiveAdd(element, n.getRight());
+         }
+      }  
    }
 
    /**
@@ -62,8 +95,40 @@ public class TreeBag<E extends Comparable> implements Cloneable
    **/
    public E retrieve(E target)
    {
-      // Student will replace this return statement with their own code:
-      return target;
+      if(root == null)
+      {
+         return null;
+      }
+      else
+      {
+         return recursiveSearch(target, root);
+      }
+   }
+   
+   private E recursiveSearch(E target, BTNode<E> n)
+   {
+      if(n == null)
+      {
+         return null;
+      }
+      else
+      {
+         if(target.compareTo(n.getData()) == 0)
+         {
+            return n.getData();
+         }
+         else
+         {         
+            if(target.compareTo(n.getData()) > 0)
+            {
+               return recursiveSearch(target, n.getRight());
+            }
+            else
+            {
+               return recursiveSearch(target, n.getLeft());
+            }
+         }
+      }
    }
 
    
@@ -94,7 +159,7 @@ public class TreeBag<E extends Comparable> implements Cloneable
    **/
    public void display()
    {
-      // Student will replace this with their own code:
+      root.inorderPrint();
       
    } 
      
