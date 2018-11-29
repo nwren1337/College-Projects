@@ -1,3 +1,8 @@
+//Nate Wren
+//Project 4
+//11/29/2018
+
+
 // File: BTNode.java
 // Complete documentation is available from the BTNode link in:
 //   http://www.cs.colorado.edu/~main/docs/

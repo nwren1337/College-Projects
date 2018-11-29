@@ -1,3 +1,7 @@
+//Nate Wren
+//Project 4
+//11/29/2018
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -66,21 +70,41 @@ public class Golfer implements Comparable<Golfer>
    
    /* ACCESSORS */
    
+   /**
+    *Accessor for name instance variable
+    *@return 
+    *    name of the golfer
+    */
    public String getName()
    {
       return lastName;
    }
    
+   /**
+    *Accessor for number of rounds instance variable
+    *@return 
+    *    number of rounds
+    */
    public int getNumRounds()
    {
       return numRounds;
    }
    
+   /**
+    *Accessor for handicap instance variable
+    *@return 
+    *    handicap
+    */
    public int getHandicap()
    {
       return handicap;
    }
    
+   /**
+    *Accessor for average score instance variable
+    *@return 
+    *    average score
+    */
    public double getAverageScore()
    {
       return avgScore;
@@ -89,16 +113,33 @@ public class Golfer implements Comparable<Golfer>
    
    /* MODIFIERS */
    
+   /**
+    *Modifier for name instance variable
+    *@param name
+    *    name of the golfer
+    */
    public void setName(String name)
    {
       lastName = name;
    }
    
+   /**
+    *Modifier for number of rounds
+    *@param r
+    *    new number of rounds
+    */
    public void setNumRounds(int r)
    {
       numRounds = r;
    }
    
+   /**
+    *Modifier for handicap
+    *@param h
+    *    new handicap
+    *@throws IllegalArgumentException
+    *    thrown if handicap is not within range of 0-20
+    */
    public void setHandicap(int h)
    {
       if((h < HANDICAP_MIN) || (h > HANDICAP_MAX))
@@ -107,11 +148,21 @@ public class Golfer implements Comparable<Golfer>
       handicap = h;
    }
    
+   /**
+    *Modifier that overwrites current score with new score
+    *@param sc
+    *    new score
+    */
    public void setAverageScore(double sc)
    {
       avgScore = sc;
    }
    
+   /**
+    *Modifier that updates current score and number of rounds with new score
+    *@param sc
+    *    new score to be added
+    */
    public void addScore(double sc)
    {
       double totScore = avgScore * numRounds;
@@ -123,11 +174,25 @@ public class Golfer implements Comparable<Golfer>
    
    /* OVERRIDES */
    
+   /**
+    *Implementation of compareTo. Orders Golfers alphabetical order
+    *@param other
+    *    other Golfer object to check
+    *@return
+    *    0  => the golfers have the same name
+    *    >0 => the other golfer is greater than this one 
+    *    <0 => the other golfer is less than this one
+    */
    public int compareTo(Golfer other)
    {
       return this.lastName.toLowerCase().compareTo(other.lastName.toLowerCase());
    }
    
+   /**
+    *Implementation of toString
+    *@return
+    *    string representation of Golfer object
+    */
    public String toString()
    {
       return lastName + " " + numRounds + " " + handicap + " " + avgScore;

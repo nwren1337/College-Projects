@@ -1,3 +1,8 @@
+//Nate Wren
+//Project 4
+//11/29/2018
+
+
 import java.util.ArrayList;
 
 // File: TreeBag.java 
@@ -107,32 +112,44 @@ public class TreeBag<E extends Comparable> implements Cloneable
       }
    }
    
+   //Helper function to retrieve the target
    private E recursiveSearch(E target, BTNode<E> n)
    {
+      //Base case if target is not present in BST
       if(n == null)
       {
          return null;
       }
       else
       {
+         //Base case if target is found in BST
          if(target.compareTo(n.getData()) == 0)
          {
             return n.getData();
          }
+         //Recursive case
          else
-         {         
+         {
+            //if the target is larger than the current         
             if(target.compareTo(n.getData()) > 0)
             {
+               //Look to the right
                return recursiveSearch(target, n.getRight());
             }
             else
             {
+               //Look to the left
                return recursiveSearch(target, n.getLeft());
             }
          }
       }
    }
    
+   /**
+   * Return ArrayList representation of the TreeBag
+   * @return 
+   *  ArrayList contanting the contents of the bag in order
+   **/
    public ArrayList<E> getArray()
    {
       if(root == null)
@@ -151,8 +168,10 @@ public class TreeBag<E extends Comparable> implements Cloneable
       }
    }
    
+   //Private helper method for conversion
    private void fill(ArrayList<E> arr, BTNode<E> node)
    {
+      //In order traversal to insert to ArrayList reference parameter
       if (node.getLeft() != null)
          fill(arr, node.getLeft()); 
       arr.add(node.getData());
@@ -176,15 +195,37 @@ public class TreeBag<E extends Comparable> implements Cloneable
    public boolean remove(E target)
    {
       boolean removed = false;
-      
+           
+      //If the tree is not empty
       if(root != null)
       {
+         //If the target to be removed is the root
          if(target.compareTo(root.getData()) == 0)
          {
-            //handle root removal here
+            //If there is no left subtree
+            if(root.getLeft() == null && root.getRight() != null)
+            {
+               //overwrite root with the right subtree
+               root = root.getRight();
+            }
+            //If there is no right subtree
+            else if(root.getLeft() != null && root.getRight() == null)
+            {
+               //overwrite root with the left subtree
+               root = root.getLeft();
+            }
+            //If root has both left and right subtrees
+            else
+            {
+               //Set the data of root to the rightmost value of the left subtree
+               root.setData(root.getLeft().getRightmostData());
+               //Get rid of duplicate value
+               root.getLeft().removeRightmost();
+            }
          }
          else
          {
+            //call recursive function to find the target to remove
             removed = recursiveRemove(target, root, null);
          }
       }
@@ -192,19 +233,26 @@ public class TreeBag<E extends Comparable> implements Cloneable
       return removed;
    }
    
+   //This is voodoo, I believe it works...
    private boolean recursiveRemove(E target, BTNode<E> current, BTNode<E> previous)
    {
+      //Base case if the target does not exist in tree
       if(current == null)
       {
          return false;
       }
       else
       {
+         //Value of the comparison
          int comparison = target.compareTo(current.getData());
+         
+         //Base case if the target is the current node
          if(comparison == 0)
          {
+            //If the target is a leaf
             if(current.isLeaf())
             {
+               //Set corresponding value of the previous node to null
                if(current == previous.getLeft())
                {
                   previous.setLeft(null);
@@ -214,10 +262,13 @@ public class TreeBag<E extends Comparable> implements Cloneable
                   previous.setRight(null);
                }
             }
+            //If the target has children
             else
             {
+               //If the target has a right subtree, but not left
                if(current.getLeft() == null && current.getRight() != null)
                {
+                  //Shift parents corresponding link to the right node
                   if(current == previous.getLeft())
                   {  
                      previous.setLeft(current.getRight());
@@ -227,8 +278,10 @@ public class TreeBag<E extends Comparable> implements Cloneable
                      previous.setRight(current.getRight());
                   }
                }
+               //If the target has a left subtree but not right
                else if(current.getLeft() != null && current.getRight() == null)
                {
+                  //shift parents corresponding link to the left node
                   if(current == previous.getLeft())
                   {  
                      previous.setLeft(current.getLeft());
@@ -238,8 +291,11 @@ public class TreeBag<E extends Comparable> implements Cloneable
                      previous.setRight(current.getLeft());
                   }
                }
+               //If the target has a left and right subtree
                else
                {
+                  //Swap corresponding link in the parent with the rightmost data of the left subtree
+                  //Remove duplicate data from the sub tree
                   if(current == previous.getLeft())
                   {
                      previous.getLeft().setData(current.getRightmostData());
@@ -253,14 +309,16 @@ public class TreeBag<E extends Comparable> implements Cloneable
                }
                   
             }
-            
+           
             return true;
          }
+         //Recursive case if the target is less than the current node
          else if(comparison < 0)
          {
             //Check left subtree
             return recursiveRemove(target, current.getLeft(), current);
          }
+         //Recursive case if the target is greater than the current node
          else
          {
             //check right subtree
