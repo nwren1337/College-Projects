@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 public class GolferScoresTree
 {
    final static int NAME_ORDERED = 1, TREE_ORDERED = 2, SINGLE_GOLFER = 3;
-   /* driver file */
+
    public static void main(String[] args)
    {
       int menuOption = 0;
@@ -94,7 +94,41 @@ public class GolferScoresTree
    
    public static void add(TreeBag<Golfer> golfers)
    {
-      //to be implemented
+      Scanner keyboard = new Scanner(System.in);
+      String input, name;
+      int handicap, rounds;
+      double score;
+      boolean invalidInput = false;
+      
+      do
+      {
+         try 
+         {
+            System.out.print("Enter the golfer's last name : ");
+            name = keyboard.nextLine();
+            
+            System.out.print("Enter the number of rounds they have played : ");
+            input = keyboard.nextLine();
+            rounds = Integer.parseInt(input);
+            
+            System.out.print("Enter their handicap : ");
+            input = keyboard.nextLine();
+            handicap = Integer.parseInt(input);
+            
+            System.out.print("Enter their average score : ");
+            input = keyboard.nextLine();
+            score = Double.parseDouble(input);
+            
+            golfers.add(new Golfer(name, rounds, handicap, score));
+            invalidInput = false;
+         } 
+         catch (java.lang.NumberFormatException e)
+         {
+            System.out.println("ERROR: number expected!");
+            invalidInput = true;
+         }
+        } while(invalidInput);
+  
    }
    
    public static void save(TreeBag<Golfer> database, String filename)
