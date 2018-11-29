@@ -69,7 +69,7 @@ public class GolferScoresTree
                golfers.displayAsTree();
                break;
             case SINGLE_GOLFER :
-               //do something
+               printSingle(golfers);
                break;
             default :
                System.out.println("ERROR: Invalid option!");
@@ -79,6 +79,29 @@ public class GolferScoresTree
       else
       {
          System.out.println("The database is empty!");
+      }
+   }
+   
+   public static void printSingle(TreeBag<Golfer> golfers)
+   {
+      Scanner keyboard = new Scanner(System.in);
+      String name;
+      
+      System.out.print("Please enter the name of the golfer you whose stats you want : ");
+      name = keyboard.nextLine();
+      
+      Golfer test = new Golfer(name);
+      Golfer toPrint = golfers.retrieve(test);
+      
+      if(toPrint != null)
+      {
+         System.out.println("Number of rounds played : " + toPrint.getNumRounds());
+         System.out.println("Handicap : " + toPrint.getHandicap());
+         System.out.println("Average Score : " + toPrint.getAverageScore());
+      }
+      else
+      {
+         System.out.println(name + " is not a golfer in the database!");
       }
    }
    
@@ -253,7 +276,7 @@ public class GolferScoresTree
             System.out.println("Menu options : ");
             System.out.println("\t1. Display all golfers sorted by last name");
             System.out.println("\t2. Display all golfers in a tree format");
-            System.out.println("\t3. Display one golfer");
+            System.out.println("\t3. Print a golfers stats");
             System.out.println("\t4. Update a golfers average score");
             System.out.println("\t5. Remove a golfer from the database");
             System.out.println("\t6. Add a golfer to the database");
