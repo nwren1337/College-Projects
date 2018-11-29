@@ -1,15 +1,18 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class GolferScoresTree
 {
+   final static int NAME_ORDERED = 1, TREE_ORDERED = 2, SINGLE_GOLFER = 3;
    /* driver file */
    public static void main(String[] args)
    {
       int menuOption = 0;
-      final int NAME_ORDERED = 1, TREE_ORDERED = 2, SINGLE_GOLFER = 3;
+      
       boolean loopAgain = true;
-      String golferDatabase = "golferinfo.txt";
-      TreeBag<Golfer> golfers = readFile(golferDatabase);
+      String databaseFile = "golferinfo.txt";
+      TreeBag<Golfer> golferDatabase = readFile(databaseFile);
       
       System.out.println("Welcome to the Golfer Scores program!");
       System.out.println("This program will manage a databse of golfer scores.");
@@ -21,25 +24,25 @@ public class GolferScoresTree
          switch(menuOption)
          {
             case 1:
-               display(NAME_ORDERED);
+               display(golferDatabase, NAME_ORDERED);
                break;
             case 2:
-               display(TREE_ORDERED);
+               display(golferDatabase, TREE_ORDERED);
                break;
             case 3:
-               display(SINGLE_GOLFER);
+               display(golferDatabase, SINGLE_GOLFER);
                break;
             case 4:
-               update(golfers);
+               update(golferDatabase);
                break;
             case 5:
-               remove(golfers);
+               remove(golferDatabase);
                break;
             case 6:
-               add(golfers);
+               add(golferDatabase);
                break;
             case 7:
-               saveAndExit(golfers, golferDatabase);
+               saveAndExit(golferDatabase, databaseFile);
                loopAgain = false;
                break;
             default :
@@ -51,9 +54,30 @@ public class GolferScoresTree
        System.out.println("Have a great day!");
    }
    
-   public static void display(int opt)
+   public static void display(TreeBag<Golfer> golfers, int opt)
    {
-      //to be implemented
+      if(golfers != null)
+      {
+         switch(opt)
+         {
+            case NAME_ORDERED :
+               golfers.display();
+               break;
+            case TREE_ORDERED :
+               golfers.displayAsTree();
+               break;
+            case SINGLE_GOLFER :
+               //do something
+               break;
+            default :
+               System.out.println("Invalid option!");
+               break;
+          }
+      }
+      else
+      {
+         System.out.println("The database is empty!");
+      }
    }
    
    public static void update(TreeBag<Golfer> golfers)
@@ -78,8 +102,42 @@ public class GolferScoresTree
    
    public static TreeBag<Golfer> readFile(String filename)
    {
-      //to be implemented
-      return null;
+      TreeBag<Golfer> database = null;
+      String temp, lastName;
+      String[] line;
+      int numRounds, handicap, index = 0;
+      double average;
+      
+      try 
+      {
+         File f = new File(filename);
+         
+         Scanner inputStream = new Scanner(f);
+         
+         database = new TreeBag<Golfer>();
+         
+         while(inputStream.hasNextLine())
+         {
+            temp = inputStream.nextLine();
+            line = temp.split(" ");
+            lastName = line[0];
+            numRounds = Integer.parseInt(line[1]);
+            handicap = Integer.parseInt(line[2]);
+            average = Double.parseDouble(line[3]);
+            
+            database.add(new Golfer(lastName, numRounds, handicap, average));
+         }        
+      } 
+      catch (java.io.FileNotFoundException e)
+      {
+         System.out.println("ERROR: Database file not found!");
+      }
+      catch (java.lang.NumberFormatException e)
+      {
+         System.out.println("ERROR: unexpected data in file!");
+      }
+      
+      return database;
    }
    
    public static int menu()
@@ -106,7 +164,7 @@ public class GolferScoresTree
          } 
          catch(java.util.InputMismatchException e)
          {
-            System.out.println("Invalid input!");
+            System.out.println("ERROR: Invalid input!");
             keyboard.next();
             invalidInput = true;
          }
