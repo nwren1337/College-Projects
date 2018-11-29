@@ -1,6 +1,8 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 public class GolferScoresTree
 {
@@ -42,11 +44,11 @@ public class GolferScoresTree
                add(golferDatabase);
                break;
             case 7:
-               saveAndExit(golferDatabase, databaseFile);
+               save(golferDatabase, databaseFile);
                loopAgain = false;
                break;
             default :
-               System.out.println("Unexpected input!");
+               System.out.println("ERROR: Unexpected input!");
                break;
          }
        } while(loopAgain);
@@ -70,7 +72,7 @@ public class GolferScoresTree
                //do something
                break;
             default :
-               System.out.println("Invalid option!");
+               System.out.println("ERROR: Invalid option!");
                break;
           }
       }
@@ -95,14 +97,42 @@ public class GolferScoresTree
       //to be implemented
    }
    
-   public static void saveAndExit(TreeBag<Golfer> golfers, String filename)
+   public static void save(TreeBag<Golfer> database, String filename)
    {
-      //to be implemented
+      File f;
+      FileOutputStream outStream;
+      PrintWriter output;
+      String line;
+      ArrayList<Golfer> golfers = database.getArray();
+      int size = golfers.size();
+      
+      
+      try 
+      {
+         f = new File(filename);
+         outStream = new FileOutputStream(f);
+         output = new PrintWriter(outStream);
+         
+         for(int i = 0; i < size; i++)
+         {
+            line = golfers.get(i).toString();
+            output.println(line);
+         }
+         
+         output.close();
+       } 
+       catch(java.io.FileNotFoundException e)
+       {
+         System.out.println("ERROR: Database could not be updated!");
+       }    
+      
    }
    
    public static TreeBag<Golfer> readFile(String filename)
    {
       TreeBag<Golfer> database = null;
+      Scanner inputStream;
+      File f;
       String temp, lastName;
       String[] line;
       int numRounds, handicap, index = 0;
@@ -110,9 +140,9 @@ public class GolferScoresTree
       
       try 
       {
-         File f = new File(filename);
+         f = new File(filename);
          
-         Scanner inputStream = new Scanner(f);
+         inputStream = new Scanner(f);
          
          database = new TreeBag<Golfer>();
          
@@ -126,7 +156,9 @@ public class GolferScoresTree
             average = Double.parseDouble(line[3]);
             
             database.add(new Golfer(lastName, numRounds, handicap, average));
-         }        
+         }
+         
+         inputStream.close();        
       } 
       catch (java.io.FileNotFoundException e)
       {
