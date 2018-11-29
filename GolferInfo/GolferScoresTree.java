@@ -13,7 +13,7 @@ public class GolferScoresTree
       int menuOption = 0;
       
       boolean loopAgain = true;
-      String databaseFile = "golferinfo.txt";
+      String databaseFile = "testinfo.txt";
       TreeBag<Golfer> golferDatabase = readFile(databaseFile);
       
       System.out.println("Welcome to the Golfer Scores program!");
@@ -146,7 +146,22 @@ public class GolferScoresTree
    
    public static void remove(TreeBag<Golfer> golfers)
    {
-      //to be implemented
+      Scanner keyboard = new Scanner(System.in);
+      String name;
+      
+      System.out.print("Please enter the name of the golfer you wish to remove : ");
+      name = keyboard.nextLine();
+      
+      Golfer toRemove = new Golfer(name);
+      
+      if(golfers.remove(toRemove))
+      {
+         System.out.println(name + " was removed!");
+      }
+      else
+      {
+         System.out.println(name + " is not a golfer in the database!");
+      }
    }
    
    public static void add(TreeBag<Golfer> golfers)
