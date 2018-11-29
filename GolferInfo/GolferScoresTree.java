@@ -84,7 +84,34 @@ public class GolferScoresTree
    
    public static int menu()
    {
-      //to be implemented
-      return 7;
+      Scanner keyboard = new Scanner(System.in);
+      int input = 0;
+      boolean invalidInput = false;
+      
+      do
+      {
+         try 
+         {
+            System.out.println("Menu options : ");
+            System.out.println("\t1. Display all golfers sorted by last name");
+            System.out.println("\t2. Display all golfers in a tree format");
+            System.out.println("\t3. Display one golfer");
+            System.out.println("\t4. Update a golfers average score");
+            System.out.println("\t5. Remove a golfer from the database");
+            System.out.println("\t6. Add a golfer to the database");
+            System.out.println("\t7. Save and exit");
+            System.out.print("Your choice : ");
+            input = keyboard.nextInt();
+            invalidInput = false;
+         } 
+         catch(java.util.InputMismatchException e)
+         {
+            System.out.println("Invalid input!");
+            keyboard.next();
+            invalidInput = true;
+         }
+        } while(invalidInput);
+         
+      return input;
    }
 }
