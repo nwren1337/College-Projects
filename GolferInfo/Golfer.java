@@ -17,7 +17,7 @@ public class Golfer implements Comparable<Golfer>
    // 2. All numerical data members are updated together. Ie,
    //    if a new round is added, the average score and handicap
    //    are recalculated 
-   // 3. Handicap has a validate range of 0-20 
+   // 3. Handicap has a valid range of 0-20 
    private String lastName;
    private int numRounds;
    private int handicap;
@@ -92,6 +92,24 @@ public class Golfer implements Comparable<Golfer>
    public void setName(String name)
    {
       lastName = name;
+   }
+   
+   public void setNumRounds(int r)
+   {
+      numRounds = r;
+   }
+   
+   public void setHandicap(int h)
+   {
+      if((h < HANDICAP_MIN) || (h > HANDICAP_MAX))
+         throw new IllegalArgumentException("Handicap is not within range of 0-20!");
+      
+      handicap = h;
+   }
+   
+   public void setAverageScore(double sc)
+   {
+      avgScore = sc;
    }
    
    public void addScore(double sc)
