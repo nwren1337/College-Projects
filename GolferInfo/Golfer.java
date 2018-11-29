@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * Golfer class to model information on a golfer. Tracks last name,
  * number of rounds, handicap, and average score of the golfer.
@@ -96,7 +99,7 @@ public class Golfer implements Comparable<Golfer>
       double totScore = avgScore * numRounds;
       totScore += sc;
       numRounds++;
-      avgScore = totScore / numRounds;
+      avgScore = new BigDecimal(totScore / numRounds).setScale(2, RoundingMode.HALF_UP).doubleValue();
       
    }
    
