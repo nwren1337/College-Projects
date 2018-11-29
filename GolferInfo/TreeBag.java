@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 // File: TreeBag.java 
 
 // The implementation of most methods in this file is left as a student
@@ -130,6 +132,36 @@ public class TreeBag<E extends Comparable> implements Cloneable
          }
       }
    }
+   
+   public ArrayList<E> getArray()
+   {
+      if(root == null)
+      {
+         return null;
+      }
+      else
+      {
+         int size = size();
+         int middle = size / 2;
+         ArrayList<E> arr = new ArrayList<E>();
+         
+         fill(arr, root);
+         
+         return arr;
+      }
+   }
+   
+   private void fill(ArrayList<E> arr, BTNode<E> node)
+   {
+      if (node.getLeft() != null)
+         fill(arr, node.getLeft()); 
+      arr.add(node.getData());
+      if (node.getRight() != null)
+         fill(arr, node.getRight());
+   }    
+   
+   
+   
 
    
    /**
