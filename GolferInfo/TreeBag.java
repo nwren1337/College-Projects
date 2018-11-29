@@ -175,8 +175,98 @@ public class TreeBag<E extends Comparable> implements Cloneable
    **/
    public boolean remove(E target)
    {
-      // Student will replace this return statement with their own code:
-      return false;
+      boolean removed = false;
+      
+      if(root != null)
+      {
+         if(target.compareTo(root.getData()) == 0)
+         {
+            //handle root removal here
+         }
+         else
+         {
+            removed = recursiveRemove(target, root, null);
+         }
+      }
+      
+      return removed;
+   }
+   
+   private boolean recursiveRemove(E target, BTNode<E> current, BTNode<E> previous)
+   {
+      if(current == null)
+      {
+         return false;
+      }
+      else
+      {
+         int comparison = target.compareTo(current.getData());
+         if(comparison == 0)
+         {
+            if(current.isLeaf())
+            {
+               if(current == previous.getLeft())
+               {
+                  previous.setLeft(null);
+               }
+               else
+               {
+                  previous.setRight(null);
+               }
+            }
+            else
+            {
+               if(current.getLeft() == null && current.getRight() != null)
+               {
+                  if(current == previous.getLeft())
+                  {  
+                     previous.setLeft(current.getRight());
+                  }
+                  else
+                  {
+                     previous.setRight(current.getRight());
+                  }
+               }
+               else if(current.getLeft() != null && current.getRight() == null)
+               {
+                  if(current == previous.getLeft())
+                  {  
+                     previous.setLeft(current.getLeft());
+                  }
+                  else
+                  {
+                     previous.setRight(current.getLeft());
+                  }
+               }
+               else
+               {
+                  if(current == previous.getLeft())
+                  {
+                     previous.getLeft().setData(current.getRightmostData());
+                     current.removeRightmost();
+                  }
+                  else
+                  {
+                     previous.getRight().setData(current.getRightmostData());
+                     current.removeRightmost();
+                  }
+               }
+                  
+            }
+            
+            return true;
+         }
+         else if(comparison < 0)
+         {
+            //Check left subtree
+            return recursiveRemove(target, current.getLeft(), current);
+         }
+         else
+         {
+            //check right subtree
+            return recursiveRemove(target, current.getRight(), current);
+         }
+      }
    }
    
    /**
