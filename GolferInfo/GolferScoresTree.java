@@ -84,7 +84,41 @@ public class GolferScoresTree
    
    public static void update(TreeBag<Golfer> golfers)
    {
-      //to be implemented
+      Scanner keyboard = new Scanner(System.in);
+      String temp, name;
+      double score;
+      boolean invalidInput = false;
+      
+      System.out.print("Please enter the name of the golfer you wish to update : ");
+      name = keyboard.nextLine();
+      
+      Golfer test = new Golfer(name);
+      Golfer toUpdate = golfers.retrieve(test);
+      
+      if(toUpdate != null)
+      {
+         do
+         {
+            try 
+            {
+               System.out.print("Enter the score of " + name + "'s latest round : ");
+               temp = keyboard.nextLine();
+               score = Double.parseDouble(temp);
+               toUpdate.addScore(score);
+               invalidInput = false;
+            } 
+            catch (java.lang.NumberFormatException e)
+            {
+               System.out.println("ERROR: number expected!");
+               invalidInput = true;
+            }
+           } while(invalidInput);
+      }
+      else
+      {
+         System.out.println(name + " is not a golfer in the database!");
+      }     
+      
    }
    
    public static void remove(TreeBag<Golfer> golfers)
