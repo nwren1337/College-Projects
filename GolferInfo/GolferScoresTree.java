@@ -1,62 +1,90 @@
+import java.util.Scanner;
+
 public class GolferScoresTree
 {
    /* driver file */
    public static void main(String[] args)
    {
-      Golfer test1 = new Golfer("Aaron");
-      Golfer test2 = new Golfer("Adam");
-      Golfer test3 = new Golfer("Bill");
-      Golfer test4 = new Golfer("Sam");
-      Golfer test5 = new Golfer("Sam");
+      int menuOption = 0;
+      final int NAME_ORDERED = 1, TREE_ORDERED = 2, SINGLE_GOLFER = 3;
+      boolean loopAgain = true;
+      String golferDatabase = "golferinfo.txt";
+      TreeBag<Golfer> golfers = readFile(golferDatabase);
       
-      if(test1.compareTo(test2) < 0)
+      System.out.println("Welcome to the Golfer Scores program!");
+      System.out.println("This program will manage a databse of golfer scores.");
+      
+      do 
       {
-         System.out.println(test1.getName() + " is less than " + test2.getName());
-      }
-      
-      if(test3.compareTo(test2) > 0)
-      {
-         System.out.println(test3.getName() + " is greater than " + test2.getName());
-      }
-      
-      if(test4.compareTo(test5) == 0)
-      {
-         System.out.println(test4.getName() + " is equal to " + test5.getName()); 
-      }
-      
-      //Golfer test6 = new Golfer("Tom", 3, -1, 44.0); //Throws exception as expected
-      //Golfer test6 = new Golfer("Tom", 3, 55, 44.0); //Throws exception as expected
-      Golfer test6 = new Golfer("Tom", 3, 5, 44.0); //Does not throw exception 
-      
-      System.out.println(test6.getName() + " played " + test6.getNumRounds() + " rounds with a handicap of " + test6.getHandicap() + " and average score of " + test6.getAverageScore());
-      
-      System.out.println(test6);
-      
-      test1.addScore(10);
-      test1.addScore(15);
-      test1.addScore(20);
-      test1.addScore(18);
-      
-      System.out.println(test1.getName() + "'s average score is " + test1.getAverageScore());
-      
-      TreeBag testBag = new TreeBag();
-      
-      testBag.add(test1);
-      testBag.add(test2);
-      testBag.add(test3);
-      testBag.add(test4);
-      testBag.add(test5);
-      
-      testBag.display();
-      
-      if(testBag.retrieve(test1) != null)
-      {
-         System.out.println(test1.getName() + " is in the tree!");
-      }
-      
-      if(testBag.retrieve(test6) == null)
-      {
-         System.out.println(test6.getName() + " is not in the tree!");
-      }
+         menuOption = menu();
+         
+         switch(menuOption)
+         {
+            case 1:
+               display(NAME_ORDERED);
+               break;
+            case 2:
+               display(TREE_ORDERED);
+               break;
+            case 3:
+               display(SINGLE_GOLFER);
+               break;
+            case 4:
+               update(golfers);
+               break;
+            case 5:
+               remove(golfers);
+               break;
+            case 6:
+               add(golfers);
+               break;
+            case 7:
+               saveAndExit(golfers, golferDatabase);
+               loopAgain = false;
+               break;
+            default :
+               System.out.println("Unexpected input!");
+               break;
+         }
+       } while(loopAgain);
+       
+       System.out.println("Have a great day!");
+   }
+   
+   public static void display(int opt)
+   {
+      //to be implemented
+   }
+   
+   public static void update(TreeBag<Golfer> golfers)
+   {
+      //to be implemented
+   }
+   
+   public static void remove(TreeBag<Golfer> golfers)
+   {
+      //to be implemented
+   }
+   
+   public static void add(TreeBag<Golfer> golfers)
+   {
+      //to be implemented
+   }
+   
+   public static void saveAndExit(TreeBag<Golfer> golfers, String filename)
+   {
+      //to be implemented
+   }
+   
+   public static TreeBag<Golfer> readFile(String filename)
+   {
+      //to be implemented
+      return null;
+   }
+   
+   public static int menu()
+   {
+      //to be implemented
+      return 7;
    }
 }
