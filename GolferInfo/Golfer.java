@@ -104,7 +104,7 @@ public class Golfer implements Comparable<Golfer>
    
    public int compareTo(Golfer other)
    {
-      return this.lastName.compareTo(other.lastName);
+      return this.lastName.toLowerCase().compareTo(other.lastName.toLowerCase());
    }
    
    public String toString()
