@@ -11,6 +11,7 @@ public class HashTesting
    {
       Table test = new Table<Integer, String>(31);
       TableDoubleHash doubleTest = new TableDoubleHash<Integer, String>(31);
+      TableChainHash chainTest = new TableChainHash<Integer, String>(31);
       String filename = "names.txt";
       
       //Variables to handle the file I/O
@@ -42,6 +43,7 @@ public class HashTesting
             
             collisions[i] = test.put(key, name);
             doubleCollisions[i] = doubleTest.put(key, name);
+            chainCollisions[i] = chainTest.put(key, name);
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getClass().getCanonicalName() + "\n" + e.getMessage());
@@ -52,8 +54,24 @@ public class HashTesting
       
       for(int i = 0; i < 25; i++)
       {
-         System.out.println((i + 1) + "\t" + collisions[i] + "\t" + doubleCollisions[i]);
+         System.out.println((i + 1) + "\t" + collisions[i] + "\t" + doubleCollisions[i] + "\t" + chainCollisions[i]);
       }
+      
+      System.out.println("Average number of collisions for Linear : " + avg(collisions));
+      System.out.println("Average number of collisions for Double : " + avg(doubleCollisions));
+      System.out.println("Average number of collisions for Chain : " + avg(chainCollisions));
      
+   }
+   
+   public static double avg(int[] arr)
+   {
+      int sum = 0;
+      
+      for(int i = 0; i < arr.length; i++)
+      {
+         sum += arr[i];
+      }
+      
+      return (double) sum / arr.length;
    }
 }
