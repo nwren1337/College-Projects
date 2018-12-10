@@ -31,7 +31,10 @@ public class Table< K , E >
    //      null.
    //   4. If an index i has been used at some point (now or in the past), then
    //      hasBeenUsed[i] is true; otherwise it is false.
+   //   5. numCollisions is used to track the number of collisions that occur when 
+   //      attempting to add an element to the table.
    private int manyItems;
+   private int numCollisions;
    private Object[ ] keys;
    private Object[ ] data;
    private boolean[ ] hasBeenUsed;   
@@ -77,6 +80,11 @@ public class Table< K , E >
    public boolean containsKey(K key)
    {
       return findIndex(key) != -1;
+   }
+   
+   public int getNumCollisions()
+   {
+      return numCollisions;
    }
    
    
@@ -165,27 +173,31 @@ public class Table< K , E >
    * @exception NullPointerException
    *   Indicates that <CODE>key</CODE> or <CODE>element</CODE> is null.   
    **/
-   public E put(K key, E element)
+   public int put(K key, E element)
    {
       int index = findIndex(key);
+      int collisions = 0;
       E answer;
       
       if (index != -1)
       {  // The key is already in the table.
          answer = (E) data[index];
          data[index] = element;
-         return answer;
+         return collisions;
       }
       else if (manyItems < data.length)
       {  // The key is not yet in this Table.
          index = hash(key);
          while (keys[index] != null)
+         {
             index = nextIndex(index);
+            collisions++;
+         }
          keys[index] = key;
          data[index] = element;
          hasBeenUsed[index] = true;
          manyItems++;
-         return null;
+         return collisions;
       }
       else
       {  // The table is full.
