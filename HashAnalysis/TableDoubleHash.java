@@ -183,7 +183,7 @@ public class TableDoubleHash< K , E >
       if (index != -1)
       {  
          // The key is already in the table.
-         collisions++
+         collisions++;
          answer = (E) data[index];
          data[index] = element;
          return collisions;
