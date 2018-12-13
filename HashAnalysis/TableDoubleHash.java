@@ -31,10 +31,7 @@ public class TableDoubleHash< K , E >
    //      null.
    //   4. If an index i has been used at some point (now or in the past), then
    //      hasBeenUsed[i] is true; otherwise it is false.
-   //   5. numCollisions is used to track the number of collisions that occur when 
-   //      attempting to add an element to the table.
    private int manyItems;
-   private int numCollisions;
    private Object[ ] keys;
    private Object[ ] data;
    private boolean[ ] hasBeenUsed;   
@@ -80,11 +77,6 @@ public class TableDoubleHash< K , E >
    public boolean containsKey(K key)
    {
       return findIndex(key) != -1;
-   }
-   
-   public int getNumCollisions()
-   {
-      return numCollisions;
    }
    
    
@@ -142,15 +134,15 @@ public class TableDoubleHash< K , E >
    private int hash2(Object key)
    // The return value is a valid index of the table’s arrays. The index is
    // calculated as the remainder when the absolute value of the key’s
-   // hash code is divided by the size of the table’s arrays - 2.
+   // hash code is divided by the size of the table’s arrays - 2 + 1.
    {
       return 1 + (Math.abs(key.hashCode( )) % (data.length - 2));
    }
    
    
    private int nextIndex(int i, K key)
-   // The return value is normally i+1. But if i+1 is data.length, then the 
-   // return value is zero instead.
+   // The return value is normally i + hash2 computation. But if the result  
+   // is data.length, then the return value is zero instead.
    {
       int ind = (i + hash2(key)) % data.length;
       if (ind == data.length)
@@ -173,10 +165,10 @@ public class TableDoubleHash< K , E >
    *   nor </CODE>element</CODE> is null.
    * <dt><b>Postcondition:</b><dd>
    *   If this table already has an object with the specified <CODE>key</CODE>,
-   *   then that object is replaced by </CODE>element</CODE>, and the return 
-   *   value is a reference to the replaced object. Otherwise, the new 
-   *   </CODE>element</CODE> is added with the specified <CODE>key</CODE>
-   *   and the return value is null.
+   *   then that object is replaced by </CODE>element</CODE>. Otherwise, the new 
+   *   </CODE>element</CODE> is added with the specified <CODE>key</CODE>.
+   * @returns
+   *   The number of collisions that occur during the attempt to place the object
    * @exception IllegalStateException
    *   Indicates that there is no room for a new object in this table.
    * @exception NullPointerException
@@ -189,17 +181,25 @@ public class TableDoubleHash< K , E >
       E answer;
       
       if (index != -1)
-      {  // The key is already in the table.
+      {  
+         // The key is already in the table.
+         collisions++
          answer = (E) data[index];
          data[index] = element;
          return collisions;
       }
       else if (manyItems < data.length)
-      {  // The key is not yet in this Table.
+      {  
+         // The key is not yet in this Table.
          index = hash(key);
+         
+         //While hash maps to a used index
          while (keys[index] != null)
          {
+            //Gather next index
             index = nextIndex(index, key);
+            
+            //Increase number of collisions
             collisions++;
          }
          keys[index] = key;
@@ -241,7 +241,7 @@ public class TableDoubleHash< K , E >
          answer = (E) data[index];
          keys[index] = null;
          data[index] = null;
-	 manyItems--;
+	      manyItems--;
       }
       
       return answer;

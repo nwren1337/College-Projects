@@ -1,3 +1,9 @@
+// Nathan Wren
+// Project 5
+// Modified put method to return number of collisions rather than references to remove elements
+// 12/12/2018
+
+
 // File: Table.java
 // Complete documentation is available from the Table link in:
 //   http://www.cs.colorado.edu/~main/docs
@@ -31,10 +37,7 @@ public class Table< K , E >
    //      null.
    //   4. If an index i has been used at some point (now or in the past), then
    //      hasBeenUsed[i] is true; otherwise it is false.
-   //   5. numCollisions is used to track the number of collisions that occur when 
-   //      attempting to add an element to the table.
    private int manyItems;
-   private int numCollisions;
    private Object[ ] keys;
    private Object[ ] data;
    private boolean[ ] hasBeenUsed;   
@@ -80,13 +83,7 @@ public class Table< K , E >
    public boolean containsKey(K key)
    {
       return findIndex(key) != -1;
-   }
-   
-   public int getNumCollisions()
-   {
-      return numCollisions;
-   }
-   
+   }   
    
    private int findIndex(K key)
    // Postcondition: If the specified key is found in the table, then the return
@@ -164,10 +161,10 @@ public class Table< K , E >
    *   nor </CODE>element</CODE> is null.
    * <dt><b>Postcondition:</b><dd>
    *   If this table already has an object with the specified <CODE>key</CODE>,
-   *   then that object is replaced by </CODE>element</CODE>, and the return 
-   *   value is a reference to the replaced object. Otherwise, the new 
-   *   </CODE>element</CODE> is added with the specified <CODE>key</CODE>
-   *   and the return value is null.
+   *   then that object is replaced by </CODE>element</CODE>. Otherwise, the new 
+   *   </CODE>element</CODE> is added with the specified <CODE>key</CODE>.
+   * @returns
+   *   The number of collisions that occurred when attempting to insert an element  
    * @exception IllegalStateException
    *   Indicates that there is no room for a new object in this table.
    * @exception NullPointerException
@@ -180,23 +177,38 @@ public class Table< K , E >
       E answer;
       
       if (index != -1)
-      {  // The key is already in the table.
+      {  
+         // The key is already in the table.
+         //counting this case as a single collision
+         collisions++;
          answer = (E) data[index];
          data[index] = element;
          return collisions;
       }
       else if (manyItems < data.length)
-      {  // The key is not yet in this Table.
+      {  
+         // The key is not yet in this Table.
          index = hash(key);
+         
+         //While the resulting hash maps to a space that is used
          while (keys[index] != null)
          {
+            //Grab next index
             index = nextIndex(index);
+            
+            //Iterate number of collisions
             collisions++;
          }
+         
+         //set values
          keys[index] = key;
          data[index] = element;
          hasBeenUsed[index] = true;
+         
+         //increase many items by one
          manyItems++;
+         
+         //return number of collisions
          return collisions;
       }
       else

@@ -9,9 +9,18 @@ public class HashTesting
 {
    public static void main(String[] args)
    {
-      Table test = new Table<Integer, String>(31);
-      TableDoubleHash doubleTest = new TableDoubleHash<Integer, String>(31);
-      TableChainHash chainTest = new TableChainHash<Integer, String>(31);
+      //Number of records we are scanning from the file
+      int numRecords = 200;
+      
+      //Size of the table
+      int size = 241;
+      
+      //Tables to insert key-value pairs to
+      Table test = new Table<Integer, String>(size);
+      TableDoubleHash doubleTest = new TableDoubleHash<Integer, String>(size);
+      TableChainHash chainTest = new TableChainHash<Integer, String>(size);
+      
+      //Input file
       String filename = "names.txt";
       
       //Variables to handle the file I/O
@@ -19,14 +28,13 @@ public class HashTesting
       File f;
       
       //Temp variables to store value from the line
-      String name, temp;
+      String name;
       int key;
-      int[] collisions = new int[25];
-      int[] doubleCollisions = new int[25];
-      int[] chainCollisions = new int[25];
       
-      //Temp variable for splitting the line from the file into individual components
-      String[] line;
+      //Arrays to hold number of collisions per insertion
+      int[] collisions = new int[numRecords];
+      int[] doubleCollisions = new int[numRecords];
+      int[] chainCollisions = new int[numRecords];
       
       try 
       {
@@ -34,27 +42,38 @@ public class HashTesting
          f = new File(filename);
          inputStream = new Scanner(f);
          
-         for(int i = 0; i < 25; i++)
+         //Create iterator to track attempts
+         int i = 0;
+         
+         //While the file still has lines of input
+         while(inputStream.hasNext())
          {
-            temp = inputStream.nextLine();
-            line = temp.split(" ");
-            name = line[0];
-            key = Integer.parseInt(line[1]);
+            //Get the key-value pair from the file
+            name = inputStream.next();
+            key = inputStream.nextInt();
             
+            //Insert into table, store result for number of collisions
             collisions[i] = test.put(key, name);
             doubleCollisions[i] = doubleTest.put(key, name);
             chainCollisions[i] = chainTest.put(key, name);
+            
+            //iterate attempts
+            i++;
          }
       } catch (Exception e) {
          System.out.println("Error: " + e.getClass().getCanonicalName() + "\n" + e.getMessage());
       }
       
+      //Output results to the user
       System.out.println("Collisions per attempted placement in table :");
       System.out.println("Attempt\tLinear\tDouble\tChain");
       
-      for(int i = 0; i < 25; i++)
+      for(int i = 0; i < numRecords; i++)
       {
-         System.out.println((i + 1) + "\t" + collisions[i] + "\t" + doubleCollisions[i] + "\t" + chainCollisions[i]);
+         if(i < 99)
+            System.out.println("\t" + (i + 1) + "\t\t\t" + collisions[i] + "\t\t\t" + doubleCollisions[i] + "\t\t\t" + chainCollisions[i]);
+         else
+            System.out.println("\t" + (i + 1) + "\t\t" + collisions[i] + "\t\t\t" + doubleCollisions[i] + "\t\t\t" + chainCollisions[i]);
       }
       
       System.out.println("Average number of collisions for Linear : " + avg(collisions));
@@ -62,6 +81,9 @@ public class HashTesting
       System.out.println("Average number of collisions for Chain : " + avg(chainCollisions));
      
    }
+   
+   
+   
    
    public static double avg(int[] arr)
    {
